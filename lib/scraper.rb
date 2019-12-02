@@ -22,20 +22,25 @@ class Scraper
     sections = [content.css('div:nth-child(1) div.media'), content.css('div:nth-child(2) div.media')]
 
     sections.collect.with_index(0) do |section, index|
-      upcoming_games = {}
       section.collect do |media|
+
       media_body = media.css('div.media-body')
-      game_symbol = media_body.css('a').text.gsub(/\W+/, "").to_sym
-      upcoming_games[game_symbol] = {
-      name: media_body.css('a').text.strip,
-      date: media_body.css('time').text.strip,
-      datetime: media_body.css('time').attribute('datetime').value,
-      url: media_body.css('a').attribute('href').value
-      }
+        Game.create({
+          name: media_body.css('a').text.strip,
+          release_date: media_body.css('time').text.strip,
+          release_datetime: media_body.css('time').attribute('datetime').value,
+          url: media_body.css('a').attribute('href').value,
+          release_period: index == 0 ? :seven_days : :fourteen_days
+        })
       end
-      upcoming_games
+
     end
+
   end
 end
 
-test_games = Scraper.scrape_coming_soon_page(:pc)
+# Scraper.scrape_coming_soon_page(:all)
+# Game.all.each do |g|
+#   puts "#{g.name}: #{g.release_period}"
+# end
+
