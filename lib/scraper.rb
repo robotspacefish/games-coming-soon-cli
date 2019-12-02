@@ -50,8 +50,3 @@ class Scraper
     })
   end
 end
-
-Scraper.scrape_coming_soon_page(:all)
-
-Scraper.scrape_game(Game.all.first)
-binding.pry
