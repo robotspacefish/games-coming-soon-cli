@@ -1,8 +1,10 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :summary
   @@all = []
 
   def initialize()
+    @genres = []
+    @developers = []
   end
 
   def self.create(games_hash)
@@ -22,5 +24,11 @@ class Game
 
   def self.save(game)
     @@all << game
+  end
+
+  def add_info(info_hash)
+    @genres = info_hash[:genres]
+    @developers = info_hash[:developers]
+    @summary = info_hash[:summary]
   end
 end
