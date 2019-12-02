@@ -17,7 +17,25 @@ class Scraper
 
     html = open(url)
     doc = Nokogiri::HTML(html)
-    binding.pry
+
+    content = doc.css('div.content div.pad div.row')
+    sections = [content.css('div:nth-child(1) div.media'), content.css('div:nth-child(2) div.media')]
+
+    sections.collect.with_index(0) do |section, index|
+      upcoming_games = {}
+      section.collect do |media|
+      media_body = media.css('div.media-body')
+      game_symbol = media_body.css('a').text.gsub(/\W+/, "").to_sym
+      upcoming_games[game_symbol] = {
+      name: media_body.css('a').text.strip,
+      date: media_body.css('time').text.strip,
+      datetime: media_body.css('time').attribute('datetime').value,
+      url: media_body.css('a').attribute('href').value
+      }
+      end
+      upcoming_games
+    end
+  end
 end
 
-Scraper.scrape_coming_soon_page(:pc)
+test_games = Scraper.scrape_coming_soon_page(:pc)
