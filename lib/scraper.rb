@@ -37,10 +37,21 @@ class Scraper
     end
 
   end
+
+  def self.scrape_game(game)
+    url = "https://www.igdb.com#{game.url}"
+    html = open(url)
+    doc = Nokogiri::HTML(html)
+    genres = doc.css("div.gamepage-tabs div:nth-child(2) p:nth-child(1)").text.gsub("Genre:", "").strip.split(", ")
+
+    developers = doc.css("div.optimisly-game-maininfo a.block").text.strip.split(", ")
+
+    summary = doc.css("div.gamepage-tabs div:nth-child(2) div:nth-child(2)").text.gsub("\n", "").gsub("Read More", "").strip
+    binding.pry
+
+  end
 end
 
-# Scraper.scrape_coming_soon_page(:all)
-# Game.all.each do |g|
-#   puts "#{g.name}: #{g.release_period}"
-# end
-
+Scraper.scrape_coming_soon_page(:all)
+# binding.pry
+Scraper.scrape_game(Game.all.first)
