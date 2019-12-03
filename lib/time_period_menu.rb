@@ -22,8 +22,6 @@ class TimePeriodMenu < Menu
         puts "\nYou selected #{@content[time_period]}.\n"
 
         Game.print_time_period_results(time_period, @content[time_period])
-
-
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n"
         exit
