@@ -20,5 +20,7 @@ class Menu
     end
 
     puts "#{@content.length + 1}. Quit"
+
+    print "\n#{@instructions}"
   end
 end
