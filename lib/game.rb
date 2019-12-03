@@ -41,7 +41,7 @@ class Game
     end
 
 
-    puts "\nGames Coming Out in #{time_period_str}:\n\n"
+    puts "\nGames Coming Out in #{time_period_str}:\n"
 
     games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} - #{game.release_date}"
