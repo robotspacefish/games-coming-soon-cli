@@ -1,41 +1,73 @@
 class CLI
+  include Menu
+
+  attr_accessor :mode
+  attr_reader :menu_options
+
+  def initialize
+    @mode = :platform_select
+    @menu_options = {
+      platform_select: platform_select_content,
+      time_period: time_period_menu_content
+    }
+  end
+
+  def choose_menu_to_print
+    case self.mode
+    when :platform_select
+      print_menu(self.menu_options[:platform_select], "platform")
+    when :time_period
+      print_menu(self.menu_options[:time_period], "time period")
+    end
+  end
+
+  # TODO name this better
+  def run_action(selection_sym, selection_str)
+    case self.mode
+    when :platform_select
+      puts "\nOne moment please...\n"
+      Scraper.scrape_coming_soon_page(selection_sym)
+      self.update_mode(:time_period)
+    when :time_period
+      Game.print_time_period_results(selection_sym,  selection_str)
+    end
+  end
+
   def run
     user_input = nil
-    type = nil
-    puts "Games Coming Soon"
 
-    until user_input == 'quit' || user_input.to_i.between?(1, 5)
-      self.platform_select_menu
+    self.print_title
+
+    loop do
+      self.choose_menu_to_print
+
+      quit = menu_options[mode].length
       user_input = gets.strip
-       exit if user_input == 'quit'
+      index = user_input.to_i - 1
 
-      case user_input.to_i
-      when 1
-        type = :all
-      when 2
-        type = :pc
-      when 3
-        type = :xb1
-      when 4
-        type = :ps4
-      when 5
-        type = :switch
+      if index.between?(0, quit - 1)
+        selection_sym = menu_options[mode].to_a[index][0]
+        selection_str = menu_options[mode][selection_sym]
+
+        puts "\nYou selected #{selection_str}.\n"
+
+        self.run_action(selection_sym, selection_str)
+      elsif index == quit
+        puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
+        exit
       else
-        puts "You entered an invalid choice."
+        puts "\nYou made an invalid selection.\n"
       end
+
     end
-
-    Scraper.scrape_coming_soon_page(type)
   end
 
-  def platform_select_menu
-    puts <<-DOC
-      1. All
-      2. PC (Windows)
-      3. Xbox One
-      4. PlayStation 4
-      5. Nintendo Switch
-     DOC
-     print "Enter the number corresponding to the platform you'd like to see upcoming games for, or type 'quit' to quit: "
+  def update_mode(new_mode)
+    self.mode = new_mode
   end
+
+  def print_title
+    puts "\nGames Coming Soon\n"
+  end
+
 end
