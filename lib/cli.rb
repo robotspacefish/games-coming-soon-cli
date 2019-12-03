@@ -31,7 +31,7 @@ class CLI
   def platform_select_menu
     puts <<-DOC
       1. All
-      2. PC
+      2. PC (Windows)
       3. Xbox One
       4. PlayStation 4
       5. Nintendo Switch
