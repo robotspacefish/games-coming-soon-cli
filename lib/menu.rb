@@ -12,6 +12,22 @@ module Menu
     puts "#{count}. Quit"
 
     print "\n#{@instructions}"
+  def main_menu_content
+    {
+      all:  "All",
+      pc: "PC (Windows)",
+      xb1: "Xbox One",
+      ps4: "PlayStation 4",
+      switch: "Nintendo Switch"
+    }
+  end
+
+  def time_period_menu_content
+    {
+      seven_days: "7 Days",
+      fourteen_days: "14 Days"
+    }
+  end
   end
 
   def print_from_array
