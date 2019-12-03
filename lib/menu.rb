@@ -16,7 +16,7 @@ module Menu
     print_instructions("platform", quit_number)
   end
 
-  def main_menu_content
+  def platform_select_content
     {
       all:  "All",
       pc: "PC (Windows)",
