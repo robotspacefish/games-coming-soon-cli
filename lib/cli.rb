@@ -13,21 +13,33 @@ class CLI
   end
 
   def choose_menu_to_print
-    case mode
+    case self.mode
     when :platform_select
-      print_menu(menu_options[:platform_select], "platform")
+      print_menu(self.menu_options[:platform_select], "platform")
     when :time_period
-      print_menu(menu_options[:time_period], "time period")
+      print_menu(self.menu_options[:time_period], "time period")
+    end
+  end
+
+  # TODO name this better
+  def run_action(selection_sym, selection_str)
+    case self.mode
+    when :platform_select
+      puts "\nOne moment please...\n"
+      Scraper.scrape_coming_soon_page(selection_sym)
+      self.update_mode(:time_period)
+    when :time_period
+      Game.print_time_period_results(selection_sym,  selection_str)
     end
   end
 
   def run
     user_input = nil
 
-    print_title
+    self.print_title
 
     loop do
-      choose_menu_to_print
+      self.choose_menu_to_print
 
       quit = menu_options[mode].length
       user_input = gets.strip
@@ -39,11 +51,7 @@ class CLI
 
         puts "\nYou selected #{selection_str}.\n"
 
-        # case mode
-        # when :platform_select
-
-        # when :time_period
-        # end
+        self.run_action(selection_sym, selection_str)
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
         exit
@@ -51,10 +59,11 @@ class CLI
         puts "\nYou made an invalid selection.\n"
       end
 
-
-
-
     end
+  end
+
+  def update_mode(new_mode)
+    self.mode = new_mode
   end
 
   def print_title
