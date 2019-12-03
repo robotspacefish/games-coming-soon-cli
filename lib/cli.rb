@@ -5,8 +5,7 @@ class CLI
     puts "Games Coming Soon"
 
     MainMenu.new.run
+    TimePeriodMenu.new.run
 
-    binding.pry
-    # Scraper.scrape_coming_soon_page(platform_type)
   end
 end
