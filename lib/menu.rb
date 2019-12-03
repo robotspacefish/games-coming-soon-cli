@@ -1,17 +1,21 @@
 module Menu
-  attr_accessor :instructions, :content, :input
-
-  def print_from_hash
+  def print_from_hash(content)
     count = 1
     puts "\n"
-    @content.each do |key, value|
+    content.each do |key, value|
       puts "#{count}. #{value}"
       count += 1
     end
 
     puts "#{count}. Quit"
+  end
 
-    print "\n#{@instructions}"
+  def print_menu(content, instruction_noun)
+    quit_number = content.length + 1
+    print_from_hash(content)
+    print_instructions("platform", quit_number)
+  end
+
   def main_menu_content
     {
       all:  "All",
@@ -28,6 +32,9 @@ module Menu
       fourteen_days: "14 Days"
     }
   end
+
+  def print_instructions(noun, quit_number)
+    print "\nEnter the number corresponding to the #{noun} you'd like to see upcoming games for, or type #{quit_number} to quit: "
   end
 
   def print_from_array
