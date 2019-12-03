@@ -22,7 +22,9 @@ class MainMenu < Menu
 
       if index.between?(0, quit - 1)
         platform_type = @content.to_a[index][0]
-        puts "\nYou selected #{content[platform_type]}\n"
+
+        puts "\nYou selected #{content[platform_type]}.\n"
+
         Scraper.scrape_coming_soon_page(platform_type)
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n"
