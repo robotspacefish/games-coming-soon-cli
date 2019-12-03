@@ -1,6 +1,5 @@
 class MainMenu < Menu
   def initialize
-    super
     @content = {
       all:  "All",
         pc: "PC (Windows)",
