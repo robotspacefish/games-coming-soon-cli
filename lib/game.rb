@@ -31,4 +31,20 @@ class Game
     @developers = info_hash[:developers]
     @summary = info_hash[:summary]
   end
+
+  def self.print_time_period_results(time_period_sym, time_period_str)
+    games = nil
+    if time_period_sym == :seven_days
+      games = self.all.select { |game| game.release_period == time_period_sym }
+    else
+      games = self.all
+    end
+
+
+    puts "\nGames Coming Out in #{time_period_str}:\n\n"
+
+    games.each.with_index(1) do |game, index|
+      puts "#{index}. #{game.name} - #{game.release_date}"
+    end
+  end
 end
