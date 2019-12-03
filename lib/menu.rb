@@ -1,4 +1,4 @@
-class Menu
+module Menu
   attr_accessor :instructions, :content, :input
 
   def print_from_hash

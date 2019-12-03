@@ -1,4 +1,5 @@
 class CLI
+  include Menu
   def run
     user_input = nil
     type = nil
