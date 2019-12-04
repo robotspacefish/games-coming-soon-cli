@@ -18,10 +18,10 @@ class CLI
   end
 
   def scrape_coming_soon_games
-      Scraper.scrape_coming_soon_page(:pc)
-      Scraper.scrape_coming_soon_page(:ps4)
-      Scraper.scrape_coming_soon_page(:xb1)
-      Scraper.scrape_coming_soon_page(:switch)
+    [:pc, :ps4, :xb1, :switch].each do |platform|
+      Scraper.scrape_coming_soon_page(platform)
+    end
+  end
   end
 
   def choose_menu_to_print
