@@ -8,7 +8,7 @@ class CLI
     @mode = :platform_select
     @menu_options = {
       platform_select: platform_select_content,
-      time_period: time_period_menu_content
+      time_period_select: time_period_menu_content
     }
 
     @user_choices = {
@@ -34,9 +34,9 @@ class CLI
     when :platform_select
       puts "\n====== Platform Selection Menu ======\n"
       print_menu(self.menu_options[:platform_select], "platform")
-    when :time_period
+    when :time_period_select
       puts "\n====== Time Period Selection Menu ======\n"
-      print_menu(self.menu_options[:time_period], "time period")
+      print_menu(self.menu_options[:time_period_select], "time period")
     end
   end
 
@@ -44,10 +44,10 @@ class CLI
   def run_action(selection_sym, selection_str)
     case self.mode
     when :platform_select
-      Scraper.scrape_coming_soon_page(selection_sym)
-      self.update_mode(:time_period)
-    when :time_period
-      Game.print_time_period_results(selection_sym,  selection_str)
+      self.update_mode(:time_period_select)
+    when :time_period_select
+      platform = self.user_choices[:platform_select]
+      Game.print_time_period_results(platform, selection_sym, selection_str)
     end
   end
 
@@ -62,7 +62,7 @@ class CLI
       index = user_input.to_i - 1
 
       if index.between?(0, quit - 1)
-        if self.mode == :time_period && index == quit - 1
+        if self.mode == :time_period_select && index == quit - 1
           puts "\nReturning to Platform Selection Menu\n"
           self.update_mode(:platform_select)
         else
@@ -70,6 +70,7 @@ class CLI
           selection_str = menu_options[mode][selection_sym]
 
           puts "\nYou selected #{selection_str}.\n"
+
           self.user_choices[mode] = selection_sym
           self.run_action(selection_sym, selection_str)
         end
