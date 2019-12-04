@@ -87,12 +87,11 @@ binding.pry
           puts "\nReturning to Platform Selection Menu\n"
           self.update_mode(:platform_select)
         else
-          selection_sym = menu_options[mode].to_a[index][0]
-          selection_str = menu_options[mode][selection_sym]
+          self.update_user_choice(index)
+          selection_str = @user_choices[mode].to_s.gsub("_", " ")
 
           puts "\nYou selected #{selection_str}.\n"
 
-          self.update_user_choice(selection_sym)
           self.update
         end
       elsif index == quit
@@ -105,8 +104,8 @@ binding.pry
     end
   end
 
-  def update_user_choice(selection)
-    self.user_choices[mode] = selection
+  def update_user_choice(index)
+    self.user_choices[mode] = menu_options[mode].to_a[index][0]
   end
 
   def update_mode(new_mode)
