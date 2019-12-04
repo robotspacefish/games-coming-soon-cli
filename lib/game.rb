@@ -62,4 +62,12 @@ class Game
       puts "#{index}. #{game.name} - #{game.release_date}"
     end
   end
+
+  def print_info
+    puts self.name
+    puts TODO GENRES GO HERE
+    puts self.developers
+    puts "\nSummary:"
+    puts self.summary
+  end
 end
