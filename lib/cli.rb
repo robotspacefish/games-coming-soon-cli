@@ -46,44 +46,6 @@ class CLI
     Game.all.each { |game| Scraper.scrape_game(game) }
   end
 
-  def print_title
-    puts "\nGames Coming Soon\n"
-  end
-
-  def print_to_cli
-    case self.mode
-    when :platform_select
-      self.print_platform_select
-
-    when :time_period_select
-      self.print_time_period_select
-
-    when :game_list
-      self.print_game_list
-    end
-  end
-
-  def print_platform_select
-    puts "\n====== Platform Selection Menu ======\n"
-    print_menu(self.menu_options[:platform_select])
-  end
-
-  def print_time_period_select
-    puts "\n====== Time Period Selection Menu ======\n"
-    print_menu(self.menu_options[:time_period_select])
-  end
-
-  def print_game_list
-    platform = self.user_choices[:platform_select]
-    time_period = self.user_choices[:time_period_select]
-
-    puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
-
-    Game.print_time_period_results(platform, time_period)
-
-    print_game_list_menu(self.menu_options[:game_list].length)
-  end
-
   def run
     user_input = nil
 
@@ -107,6 +69,44 @@ class CLI
       end
 
     end
+  end
+
+  def print_to_cli
+    case self.mode
+    when :platform_select
+      self.print_platform_select
+
+    when :time_period_select
+      self.print_time_period_select
+
+    when :game_list
+      self.print_game_list
+    end
+  end
+
+  def print_title
+    puts "\nGames Coming Soon\n"
+  end
+
+  def print_platform_select
+    puts "\n====== Platform Selection Menu ======\n"
+    print_menu(self.menu_options[:platform_select])
+  end
+
+  def print_time_period_select
+    puts "\n====== Time Period Selection Menu ======\n"
+    print_menu(self.menu_options[:time_period_select])
+  end
+
+  def print_game_list
+    platform = self.user_choices[:platform_select]
+    time_period = self.user_choices[:time_period_select]
+
+    puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
+
+    Game.print_time_period_results(platform, time_period)
+
+    print_game_list_menu(self.menu_options[:game_list].length)
   end
 
   def print_selection_feedback
