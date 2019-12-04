@@ -92,7 +92,7 @@ binding.pry
 
           puts "\nYou selected #{selection_str}.\n"
 
-          self.user_choices[mode] = selection_sym
+          self.update_user_choice(selection_sym)
           self.update
         end
       elsif index == quit
@@ -103,6 +103,10 @@ binding.pry
       end
 
     end
+  end
+
+  def update_user_choice(selection)
+    self.user_choices[mode] = selection
   end
 
   def update_mode(new_mode)
