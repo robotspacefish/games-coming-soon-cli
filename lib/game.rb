@@ -7,6 +7,10 @@ class Game
     @developers = []
   end
 
+  def info_scraped?
+    self.summary || self.genres || self.developers
+  end
+
   def self.create(games_hash)
     game = self.new
     game.name = games_hash[:name]
