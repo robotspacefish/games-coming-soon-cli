@@ -54,8 +54,10 @@ class CLI
     case self.mode
     when :platform_select
       self.print_platform_select
+
     when :time_period_select
       self.print_time_period_select
+
     when :game_list
       self.print_game_list
     end
@@ -93,20 +95,13 @@ class CLI
       index = user_input.to_i - 1
 
       if index.between?(0, quit - 1)
-        if self.mode == :time_period_select && index == quit - 1
-          puts "\nReturning to Platform Selection Menu\n"
-          self.update_mode(:platform_select)
-        else
-          self.update_user_choice(index)
-          selection_str = @user_choices[mode].to_s.gsub("_", " ")
-
-          puts "\nYou selected #{selection_str}.\n"
-
-          self.update
-        end
+        self.update_user_choice(index)
+        self.print_selection_feedback
+        self.update(index)
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
         exit
+
       else
         puts "\nYou made an invalid selection.\n"
       end
@@ -114,16 +109,29 @@ class CLI
     end
   end
 
-  def update
+  def print_selection_feedback
+    selection_str = self.user_choices[mode].to_s.gsub("_", " ").capitalize
+    puts "\n***** You selected #{selection_str}. *****\n"
+  end
+
+  def update(index)
     case self.mode
     when :platform_select
       self.update_mode(:time_period_select)
     when :time_period_select
-      self.update_mode(:game_list)
-      games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
-      self.menu_options[:game_list] = self.game_list_content(games)
+      selection = self.menu_options[mode].to_a[index][0]
+      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+
+      self.update_mode(next_mode)
+      self.update_game_list_content
+
     when :game_list
     end
+  end
+
+  def update_game_list_content
+    games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
+    self.menu_options[:game_list] = self.game_list_content(games)
   end
 
   def update_user_choice(index)
