@@ -12,7 +12,7 @@ class CLI
     }
 
     self.print_title
-    puts "\nGathering Data.... One Moment Please...\n"
+    puts "\nGathering data.... One moment please, this may take a while...\n"
 
     self.scrape_coming_soon_games
   end
