@@ -21,6 +21,12 @@ class CLI
     puts "\nGathering data.... One moment please, this may take a while...\n"
 
     self.scrape_coming_soon_games
+    # self.scrape_all_individual_game_info
+
+  end
+
+  def scrape_individual_game(game)
+    Scraper.scrape_game(game) if !game.info_scraped?
   end
 
   def scrape_coming_soon_games
@@ -28,6 +34,9 @@ class CLI
       Scraper.scrape_coming_soon_page(platform)
     end
   end
+
+  def scrape_all_individual_game_info
+    Game.all.each { |game| Scraper.scrape_game(game) }
   end
 
   def print_to_cli
