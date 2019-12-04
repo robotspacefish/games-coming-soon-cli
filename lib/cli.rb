@@ -1,7 +1,7 @@
 class CLI
   include Menu
 
-  attr_accessor :mode
+  attr_accessor :mode, :user_choices
   attr_reader :menu_options
 
   def initialize
@@ -9,6 +9,11 @@ class CLI
     @menu_options = {
       platform_select: platform_select_content,
       time_period: time_period_menu_content
+    }
+
+    @user_choices = {
+      platform_select: nil,
+      time_period_select: nil
     }
 
     self.print_title
@@ -65,6 +70,7 @@ class CLI
           selection_str = menu_options[mode][selection_sym]
 
           puts "\nYou selected #{selection_str}.\n"
+          self.user_choices[mode] = selection_sym
           self.run_action(selection_sym, selection_str)
         end
       elsif index == quit
