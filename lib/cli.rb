@@ -10,6 +10,18 @@ class CLI
       platform_select: platform_select_content,
       time_period: time_period_menu_content
     }
+
+    self.print_title
+    puts "\nGathering Data.... One Moment Please...\n"
+
+    self.scrape_coming_soon_games
+  end
+
+  def scrape_coming_soon_games
+      Scraper.scrape_coming_soon_page(:pc)
+      Scraper.scrape_coming_soon_page(:ps4)
+      Scraper.scrape_coming_soon_page(:xb1)
+      Scraper.scrape_coming_soon_page(:switch)
   end
 
   def choose_menu_to_print
@@ -27,7 +39,6 @@ class CLI
   def run_action(selection_sym, selection_str)
     case self.mode
     when :platform_select
-      puts "\nOne moment please...\n"
       Scraper.scrape_coming_soon_page(selection_sym)
       self.update_mode(:time_period)
     when :time_period
@@ -37,8 +48,6 @@ class CLI
 
   def run
     user_input = nil
-
-    self.print_title
 
     loop do
       self.choose_menu_to_print
