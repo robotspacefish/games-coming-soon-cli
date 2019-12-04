@@ -15,8 +15,10 @@ class CLI
   def choose_menu_to_print
     case self.mode
     when :platform_select
+      puts "\n====== Platform Selection Menu ======\n"
       print_menu(self.menu_options[:platform_select], "platform")
     when :time_period
+      puts "\n====== Time Period Selection Menu ======\n"
       print_menu(self.menu_options[:time_period], "time period")
     end
   end
@@ -46,12 +48,16 @@ class CLI
       index = user_input.to_i - 1
 
       if index.between?(0, quit - 1)
-        selection_sym = menu_options[mode].to_a[index][0]
-        selection_str = menu_options[mode][selection_sym]
+        if self.mode == :time_period && index == quit - 1
+          puts "\nReturning to Platform Selection Menu\n"
+          self.update_mode(:platform_select)
+        else
+          selection_sym = menu_options[mode].to_a[index][0]
+          selection_str = menu_options[mode][selection_sym]
 
-        puts "\nYou selected #{selection_str}.\n"
-
-        self.run_action(selection_sym, selection_str)
+          puts "\nYou selected #{selection_str}.\n"
+          self.run_action(selection_sym, selection_str)
+        end
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
         exit

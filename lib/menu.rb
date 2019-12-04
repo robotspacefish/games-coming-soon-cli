@@ -29,7 +29,8 @@ module Menu
   def time_period_menu_content
     {
       seven_days: "7 Days",
-      fourteen_days: "14 Days"
+      fourteen_days: "14 Days",
+      back_to_platform_select: "Back to Platform Selection"
     }
   end
 
