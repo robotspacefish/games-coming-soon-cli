@@ -22,6 +22,16 @@ class Game
     @@all
   end
 
+  def self.all_of_platform_type(platform_sym)
+    self.all.select { |game| game.platform == platform_sym }
+  end
+
+  def self.print_all
+    self.all.each.with_index(1) do |game, index|
+      puts "#{index}. #{game.name} - #{game.platform.upcase} - #{game.release_date}"
+    end
+  end
+
   def self.save(game)
     @@all << game
   end
