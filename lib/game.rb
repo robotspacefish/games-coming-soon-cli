@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :summary
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period,  :platform, :genres, :developers, :summary
   @@all = []
 
   def initialize()
@@ -14,7 +14,7 @@ class Game
     game.release_date = games_hash[:release_date]
     game.release_datetime = games_hash[:release_datetime]
     game.release_period = games_hash[:release_period]
-
+    game.platform = games_hash[:platform]
     self.save(game)
   end
 
