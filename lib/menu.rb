@@ -12,10 +12,15 @@ module Menu
 
   def print_menu(content = nil)
     if content
-      quit_number = content.length + 1
       print_from_hash(content)
     end
     print_instructions
+  end
+
+  def print_game_list_menu(list_length)
+    quit = list_length
+    puts "#{quit}. Quit"
+    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
   end
 
   def platform_select_content
@@ -34,6 +39,15 @@ module Menu
       fourteen_days: "14 Days",
       back_to_platform_select: "Back to Platform Selection"
     }
+  end
+
+  def game_list_content(games)
+    list = {}
+    games.each do |game|
+      game_sym = game.name.to_sym
+      list[game_sym] = game
+    end
+    list
   end
 
   def print_instructions

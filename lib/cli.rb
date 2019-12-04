@@ -8,7 +8,8 @@ class CLI
     @mode = :platform_select
     @menu_options = {
       platform_select: platform_select_content,
-      time_period_select: time_period_menu_content
+      time_period_select: time_period_menu_content,
+      game_list: nil
     }
 
     @user_choices = {
@@ -33,10 +34,20 @@ class CLI
     case self.mode
     when :platform_select
       puts "\n====== Platform Selection Menu ======\n"
+
       print_menu(self.menu_options[:platform_select])
     when :time_period_select
       puts "\n====== Time Period Selection Menu ======\n"
       print_menu(self.menu_options[:time_period_select])
+    when :game_list
+      platform = self.user_choices[:platform_select]
+      time_period = self.user_choices[:time_period_select]
+
+      puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
+
+      Game.print_time_period_results(platform, time_period)
+binding.pry
+      print_game_list_menu(self.menu_options[:game_list].length)
     end
   end
 
@@ -45,8 +56,10 @@ class CLI
     when :platform_select
       self.update_mode(:time_period_select)
     when :time_period_select
-      platform = self.user_choices[:platform_select]
-      Game.print_time_period_results(platform, selection_sym, selection_str)
+      self.update_mode(:game_list)
+      games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
+      self.menu_options[:game_list] = self.game_list_content(games)
+    when :game_list
     end
   end
 
