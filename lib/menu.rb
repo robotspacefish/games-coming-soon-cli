@@ -37,13 +37,13 @@ module Menu
     print "\nEnter the number corresponding to the #{noun} you'd like to see upcoming games for, or type #{quit_number} to quit: "
   end
 
-  def print_from_array
-    @content.each.with_index(1) do |item, index|
-      puts "#{index}. #{item}"
-    end
+  # def print_from_array
+  #   @content.each.with_index(1) do |item, index|
+  #     puts "#{index}. #{item}"
+  #   end
 
-    puts "#{@content.length + 1}. Quit"
+  #   puts "#{@content.length + 1}. Quit"
 
-    print "\n#{@instructions}"
-  end
+  #   print "\n#{@instructions}"
+  # end
 end
