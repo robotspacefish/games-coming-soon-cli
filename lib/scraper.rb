@@ -30,7 +30,8 @@ class Scraper
           release_date: media_body.css('time').text.strip,
           release_datetime: media_body.css('time').attribute('datetime').value,
           url: media_body.css('a').attribute('href').value,
-          release_period: index == 0 ? :seven_days : :fourteen_days
+          release_period: index == 0 ? :seven_days : :fourteen_days,
+          platform: type
         })
       end
 
