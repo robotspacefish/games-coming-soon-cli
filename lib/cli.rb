@@ -29,7 +29,7 @@ class CLI
   end
   end
 
-  def print
+  def print_to_cli
     case self.mode
     when :platform_select
       puts "\n====== Platform Selection Menu ======\n"
@@ -54,7 +54,7 @@ class CLI
     user_input = nil
 
     loop do
-      self.print
+      self.print_to_cli
 
       quit = menu_options[mode].length
       user_input = gets.strip
