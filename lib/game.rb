@@ -42,15 +42,18 @@ class Game
     @summary = info_hash[:summary]
   end
 
-  def self.print_time_period_results(platform, time_period_sym, time_period_str)
-     # note: all games of platform type print for 14 day time period
+  def self.time_period_results(platform, time_period_sym)
+    # note: all games of platform type print for 14 day time period
     games = all_of_platform_type(platform)
     if time_period_sym == :seven_days
       games = games.select { |game| game.release_period == time_period_sym }
     end
 
-    puts "\n#{platform.upcase} Games Coming Out in #{time_period_str}:\n\n"
+    games
+  end
 
+  def self.print_time_period_results(platform, time_period_sym)
+    games = self.time_period_results(platform, time_period_sym)
     games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} - #{game.release_date}"
     end
