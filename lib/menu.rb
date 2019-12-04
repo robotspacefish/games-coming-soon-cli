@@ -6,8 +6,6 @@ module Menu
       puts "#{count}. #{value}"
       count += 1
     end
-
-    puts "#{count}. Quit"
   end
 
   def print_menu(content = nil)
@@ -29,7 +27,8 @@ module Menu
       pc: "PC (Windows)",
       xb1: "Xbox One",
       ps4: "PlayStation 4",
-      switch: "Nintendo Switch"
+      switch: "Nintendo Switch",
+      quit: "Quit"
     }
   end
 
@@ -37,7 +36,8 @@ module Menu
     {
       seven_days: "7 Days",
       fourteen_days: "14 Days",
-      back_to_platform_select: "Back to Platform Selection"
+      back_to_platform_select: "Back to Platform Selection",
+      quit: "Quit"
     }
   end
 
@@ -47,6 +47,7 @@ module Menu
       game_sym = game.name.to_sym
       list[game_sym] = game
     end
+    list[:quit] = "Quit"
     list
   end
 
