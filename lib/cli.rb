@@ -29,7 +29,7 @@ class CLI
   end
   end
 
-  def choose_menu_to_print
+  def print
     case self.mode
     when :platform_select
       puts "\n====== Platform Selection Menu ======\n"
@@ -40,8 +40,7 @@ class CLI
     end
   end
 
-  # TODO name this better
-  def run_action(selection_sym, selection_str)
+  def update
     case self.mode
     when :platform_select
       self.update_mode(:time_period_select)
@@ -55,7 +54,7 @@ class CLI
     user_input = nil
 
     loop do
-      self.choose_menu_to_print
+      self.print
 
       quit = menu_options[mode].length
       user_input = gets.strip
@@ -72,7 +71,7 @@ class CLI
           puts "\nYou selected #{selection_str}.\n"
 
           self.user_choices[mode] = selection_sym
-          self.run_action(selection_sym, selection_str)
+          self.update
         end
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
