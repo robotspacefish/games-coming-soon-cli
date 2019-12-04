@@ -10,10 +10,12 @@ module Menu
     puts "#{count}. Quit"
   end
 
-  def print_menu(content, instruction_noun)
-    quit_number = content.length + 1
-    print_from_hash(content)
-    print_instructions("platform", quit_number)
+  def print_menu(content = nil)
+    if content
+      quit_number = content.length + 1
+      print_from_hash(content)
+    end
+    print_instructions
   end
 
   def platform_select_content
@@ -34,8 +36,8 @@ module Menu
     }
   end
 
-  def print_instructions(noun, quit_number)
-    print "\nEnter the number corresponding to the #{noun} you'd like to see upcoming games for, or type #{quit_number} to quit: "
+  def print_instructions
+    print "\nEnter the number corresponding to your selection: "
   end
 
   # def print_from_array

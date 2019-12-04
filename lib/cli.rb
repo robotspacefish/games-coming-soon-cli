@@ -33,10 +33,10 @@ class CLI
     case self.mode
     when :platform_select
       puts "\n====== Platform Selection Menu ======\n"
-      print_menu(self.menu_options[:platform_select], "platform")
+      print_menu(self.menu_options[:platform_select])
     when :time_period_select
       puts "\n====== Time Period Selection Menu ======\n"
-      print_menu(self.menu_options[:time_period_select], "time period")
+      print_menu(self.menu_options[:time_period_select])
     end
   end
 
