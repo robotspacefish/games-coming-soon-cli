@@ -78,7 +78,7 @@ binding.pry
     loop do
       self.print_to_cli
 
-      quit = menu_options[mode].length
+      quit = menu_options[mode].length - 1
       user_input = gets.strip
       index = user_input.to_i - 1
 
