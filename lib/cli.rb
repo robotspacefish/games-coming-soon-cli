@@ -13,13 +13,13 @@ class CLI
     puts "\nGathering data.... One moment please, this may take a while...\n"
 
     self.scrape_coming_soon_games
-    # self.scrape_all_individual_game_info
   end
 
   def setup_user_choices
     @user_choices = {
       platform_select: nil,
-      time_period_select: nil
+      time_period_select: nil,
+      start_over_select: nil
     }
   end
 
@@ -71,28 +71,45 @@ class CLI
 
   def print_to_cli
     case self.mode
-    when :platform_select
-      self.print_platform_select
+      when :platform_select
+        self.print_platform_select
 
-    when :time_period_select
-      self.print_time_period_select
+      when :time_period_select
+        self.print_time_period_select
 
-    when :game_list
-      self.print_game_list
+      when :game_list
+        self.print_game_list
+
+      when :individual_game
+        self.user_choices[:game_list].print_info
+        self.print_individual_game_select
     end
   end
 
   def update(index)
     case self.mode
-    when :platform_select
-      self.update_mode(:time_period_select)
-    when :time_period_select
-      selection = self.find_menu_content.to_a[index][0]
-      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+      when :platform_select
+        self.update_mode(:time_period_select)
 
-      self.update_game_list_content
-      self.update_mode(next_mode)
-    when :game_list
+      when :time_period_select
+        selection = self.find_menu_content.to_a[index][0]
+        next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+
+        self.update_game_list_content
+        self.update_mode(next_mode)
+
+      when :game_list
+        self.update_mode(:individual_game)
+
+      when :individual_game
+        binding.pry
+        if !game.info_scraped?
+          game = self.user_choices[:game_list]
+          scrape_individual_game(game)
+        end
+
+        # self.update_mode(:)
+
     end
   end
 
@@ -108,6 +125,11 @@ class CLI
   def print_time_period_select
     puts "\n====== Time Period Selection Menu ======\n"
     self.find_menu(:time_period_select).print_menu
+  end
+
+  def print_individual_game_select
+    puts "\n====== Menu ======\n"
+    self.find_menu(:individual_game).print_menu
   end
 
   def print_game_list
