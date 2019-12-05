@@ -1,12 +1,12 @@
 class CLI
-  include Menu
-
   attr_accessor :mode, :user_choices
-  attr_reader :menu_options
 
-  def initialize
+  def initialize(menus_hash)
     @mode = :platform_select
-    self.setup_menu_options
+    menus_hash.each do |menu_key, menu_value|
+      MenuOption.new(menu_key, menu_value)
+    end
+
     self.setup_user_choices
 
     self.print_title
@@ -17,13 +17,6 @@ class CLI
 
   end
 
-  def setup_menu_options
-    @menu_options = {
-      platform_select: platform_select_content,
-      time_period_select: time_period_menu_content,
-      game_list: nil
-    }
-  end
 
   def setup_user_choices
     @user_choices = {
@@ -46,13 +39,20 @@ class CLI
     Game.all.each { |game| Scraper.scrape_game(game) }
   end
 
+  def find_menu(mode = self.mode)
+    MenuOption.find_menu(mode)
+  end
+
+  def find_menu_content(mode = self.mode)
+    find_menu(mode).menu
+  end
+
   def run
     user_input = nil
 
     loop do
       self.print_to_cli
-
-      quit = menu_options[mode].length - 1
+      quit = self.find_menu_content.length - 1
       user_input = gets.strip
       index = user_input.to_i - 1
 
@@ -90,12 +90,12 @@ class CLI
 
   def print_platform_select
     puts "\n====== Platform Selection Menu ======\n"
-    print_menu(self.menu_options[:platform_select])
+    self.find_menu(:platform_select).print_menu
   end
 
   def print_time_period_select
     puts "\n====== Time Period Selection Menu ======\n"
-    print_menu(self.menu_options[:time_period_select])
+    self.find_menu(:time_period_select).print_menu
   end
 
   def print_game_list
@@ -106,7 +106,7 @@ class CLI
 
     Game.print_time_period_results(platform, time_period)
 
-    print_game_list_menu(self.menu_options[:game_list].length)
+    # print_game_list_menu(self.menu_options[:game_list].length)
   end
 
   def print_selection_feedback
@@ -119,7 +119,7 @@ class CLI
     when :platform_select
       self.update_mode(:time_period_select)
     when :time_period_select
-      selection = self.menu_options[mode].to_a[index][0]
+      selection = self.find_menu_content.to_a[index][0]
       next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
 
       self.update_mode(next_mode)
@@ -131,11 +131,14 @@ class CLI
 
   def update_game_list_content
     games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
+
+    # TODO set game options in new class
     self.menu_options[:game_list] = self.game_list_content(games)
+
   end
 
   def update_user_choice(index)
-    self.user_choices[mode] = menu_options[mode].to_a[index][0]
+    self.user_choices[mode] = self.find_menu_content.to_a[index][0]
   end
 
   def update_mode(new_mode)

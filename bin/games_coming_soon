@@ -1,4 +1,31 @@
 #!/usr/bin/env ruby
 require_relative '../config/environment'
 
-CLI.new.run
+def platform_select_content
+  {
+    all:  "All",
+    pc: "PC (Windows)",
+    xb1: "Xbox One",
+    ps4: "PlayStation 4",
+    switch: "Nintendo Switch",
+    quit: "Quit"
+}
+end
+
+def time_period_menu_content
+  {
+    seven_days: "7 Days",
+    fourteen_days: "14 Days",
+    back_to_platform_select: "Back to Platform Selection",
+    quit: "Quit"
+  }
+end
+
+menus_hash = {
+  platform_select: platform_select_content,
+  time_period_select: time_period_menu_content,
+  game_list: []
+}
+
+cli = CLI.new(menus_hash)
+cli.run
