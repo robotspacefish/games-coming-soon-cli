@@ -104,11 +104,7 @@ class CLI
 
     puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
 
-    # Game.print_time_period_results(platform, time_period)
-
     game_list = self.find_menu(:game_list).print_menu
-    # Game.print_time_period_results(game_list, time_period)
-    # print_game_list_menu(self.menu_options[:game_list].length)
   end
 
   def print_selection_feedback
@@ -124,9 +120,8 @@ class CLI
       selection = self.find_menu_content.to_a[index][0]
       next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
 
-      self.update_mode(next_mode)
       self.update_game_list_content
-
+      self.update_mode(next_mode)
     when :game_list
     end
   end
