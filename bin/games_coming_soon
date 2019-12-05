@@ -2,23 +2,32 @@
 require_relative '../config/environment'
 
 platform_select_content = {
-    all:  "All",
-    pc: "PC (Windows)",
-    xb1: "Xbox One",
-    ps4: "PlayStation 4",
-    switch: "Nintendo Switch"
-  }
+  all:  "All",
+  pc: "PC (Windows)",
+  xb1: "Xbox One",
+  ps4: "PlayStation 4",
+  switch: "Nintendo Switch"
+}
 
 time_period_menu_content = {
-    seven_days: "7 Days",
-    fourteen_days: "14 Days",
-    back_to_platform_select: "Back to Platform Selection"
-  }
+  seven_days: "7 Days",
+  fourteen_days: "14 Days",
+  back_to_platform_select: "Back to Platform Selection"
+}
+
+individual_game_menu_content = {
+  back_to_game_select: "Back to Game Selection",
+  back_to_time_period_select: "Back to Time Period Selection",
+  back_to_platform_select: "Back to Platform Selection"
+}
+
+
 
 menus_hash = {
   platform_select: platform_select_content,
   time_period_select: time_period_menu_content,
-  game_list: []
+  game_list: [],
+  individual_game: individual_game_menu_content
 }
 
 cli = CLI.new(menus_hash)
