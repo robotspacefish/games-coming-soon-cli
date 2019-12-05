@@ -19,7 +19,13 @@ class Game
     game.release_datetime = games_hash[:release_datetime]
     game.release_period = games_hash[:release_period]
     game.platform = games_hash[:platform]
-    self.save(game)
+    self.save(game) if !self.exists?(game)
+  end
+
+  def self.exists?(game_to_add)
+    self.all.detect do |game|
+      game.name == game_to_add.name && game.platform == game_to_add.platform
+    end
   end
 
   def self.all
