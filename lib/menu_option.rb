@@ -19,7 +19,6 @@ class MenuOption
 
   def print_menu
     if self.mode == :game_list
-      # binding.pry
       self.print_game_list_menu
     else
       self.print_from_hash(self.menu)
@@ -28,13 +27,13 @@ class MenuOption
   end
 
   def print_game_list_menu
-    list = self.menu.collect.with_index(1) do |game, index|
+    self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
         puts "#{index}. #{game.name} - #{game.platform.upcase} - #{game.release_date}"
       end
     end
 
-    quit = list.length
+    quit = self.menu.length
 
     puts "#{quit}. Quit"
     print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "

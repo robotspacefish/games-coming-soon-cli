@@ -50,7 +50,7 @@ class CLI
 
     loop do
       self.print_to_cli
-      quit = self.find_menu_content.length - 1
+      quit = self.find_menu_content.length
       user_input = gets.strip
       index = user_input.to_i - 1
 

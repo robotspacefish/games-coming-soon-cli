@@ -7,8 +7,7 @@ def platform_select_content
     pc: "PC (Windows)",
     xb1: "Xbox One",
     ps4: "PlayStation 4",
-    switch: "Nintendo Switch",
-    quit: "Quit"
+    switch: "Nintendo Switch"
 }
 end
 
@@ -16,8 +15,7 @@ def time_period_menu_content
   {
     seven_days: "7 Days",
     fourteen_days: "14 Days",
-    back_to_platform_select: "Back to Platform Selection",
-    quit: "Quit"
+    back_to_platform_select: "Back to Platform Selection"
   }
 end
 
