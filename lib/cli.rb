@@ -104,8 +104,10 @@ class CLI
 
     puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
 
-    Game.print_time_period_results(platform, time_period)
+    # Game.print_time_period_results(platform, time_period)
 
+    game_list = self.find_menu(:game_list).print_menu
+    # Game.print_time_period_results(game_list, time_period)
     # print_game_list_menu(self.menu_options[:game_list].length)
   end
 
@@ -132,9 +134,7 @@ class CLI
   def update_game_list_content
     games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
 
-    # TODO set game options in new class
-    self.menu_options[:game_list] = self.game_list_content(games)
-
+    self.find_menu(:game_list).menu = games
   end
 
   def update_user_choice(index)
