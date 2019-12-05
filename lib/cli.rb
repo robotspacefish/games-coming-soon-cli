@@ -120,7 +120,13 @@ class CLI
   end
 
   def print_selection_feedback
-    selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
+    selection_str = nil
+    if mode == :game_list
+      selection_str = self.user_choices[mode].name.upcase
+    else
+      selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
+    end
+
     puts "\n***** You selected #{selection_str}. *****\n"
   end
 
