@@ -31,7 +31,7 @@ class MenuOption
   def print_game_list_menu
     self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
-        puts "#{index}. #{game.name} - #{game.release_date}"
+        puts "#{index}. #{game.name} - #{game.platform.upcase} - #{game.release_date}"
       end
     end
   end
