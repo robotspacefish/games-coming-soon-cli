@@ -19,6 +19,7 @@ class Game
     game.release_datetime = games_hash[:release_datetime]
     game.release_period = games_hash[:release_period]
     game.platform = games_hash[:platform]
+
     self.save(game) if !self.exists?(game)
   end
 
@@ -52,21 +53,20 @@ class Game
     @summary = info_hash[:summary]
   end
 
-  def self.time_period_results(platform, time_period_sym)
+  def self.time_period_results(platform_sym, time_period_sym)
     # note: all games of platform type print for 14 day time period
-    games = all_of_platform_type(platform)
+    games = nil
+    if platform_sym == :all
+      games = self.all
+    else
+      games = all_of_platform_type(platform_sym)
+    end
+
     if time_period_sym == :seven_days
       games = games.select { |game| game.release_period == time_period_sym }
     end
 
     games
-  end
-
-  def self.print_time_period_results(platform, time_period_sym)
-    games = self.time_period_results(platform, time_period_sym)
-    games.each.with_index(1) do |game, index|
-      puts "#{index}. #{game.name} - #{game.release_date}"
-    end
   end
 
   def print_info

@@ -14,9 +14,7 @@ class CLI
 
     self.scrape_coming_soon_games
     # self.scrape_all_individual_game_info
-
   end
-
 
   def setup_user_choices
     @user_choices = {
@@ -84,6 +82,20 @@ class CLI
     end
   end
 
+  def update(index)
+    case self.mode
+    when :platform_select
+      self.update_mode(:time_period_select)
+    when :time_period_select
+      selection = self.find_menu_content.to_a[index][0]
+      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+
+      self.update_game_list_content
+      self.update_mode(next_mode)
+    when :game_list
+    end
+  end
+
   def print_title
     puts "\nGames Coming Soon\n"
   end
@@ -104,9 +116,7 @@ class CLI
 
     puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
 
-    Game.print_time_period_results(platform, time_period)
-
-    # print_game_list_menu(self.menu_options[:game_list].length)
+    game_list = self.find_menu(:game_list).print_menu
   end
 
   def print_selection_feedback
@@ -114,27 +124,10 @@ class CLI
     puts "\n***** You selected #{selection_str}. *****\n"
   end
 
-  def update(index)
-    case self.mode
-    when :platform_select
-      self.update_mode(:time_period_select)
-    when :time_period_select
-      selection = self.find_menu_content.to_a[index][0]
-      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
-
-      self.update_mode(next_mode)
-      self.update_game_list_content
-
-    when :game_list
-    end
-  end
-
   def update_game_list_content
     games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
 
-    # TODO set game options in new class
-    self.menu_options[:game_list] = self.game_list_content(games)
-
+    self.find_menu(:game_list).menu = games
   end
 
   def update_user_choice(index)
