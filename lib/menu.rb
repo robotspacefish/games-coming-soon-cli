@@ -8,12 +8,6 @@ module Menu
     end
   end
 
-  def print_game_list_menu(list_length)
-    quit = list_length
-    puts "#{quit}. Quit"
-    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
-  end
-
   def print_instructions
     print "\nEnter the number corresponding to your selection: "
   end
