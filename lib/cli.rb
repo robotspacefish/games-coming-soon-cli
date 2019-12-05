@@ -137,7 +137,14 @@ class CLI
   end
 
   def update_user_choice(index)
-    self.user_choices[mode] = self.find_menu_content.to_a[index][0]
+    choice = nil
+    if mode == :game_list
+      choice = self.find_menu_content[index]
+    else
+      choice = self.find_menu_content.to_a[index][0]
+    end
+
+    self.user_choices[mode] = choice
   end
 
   def update_mode(new_mode)
