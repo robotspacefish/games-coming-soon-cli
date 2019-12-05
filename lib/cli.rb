@@ -1,12 +1,13 @@
 class CLI
-  include Menu
+  attr_accessor :mode, :user_choices, :menu_options
 
-  attr_accessor :mode, :user_choices
-  attr_reader :menu_options
-
-  def initialize
+  def initialize(menus_hash)
     @mode = :platform_select
-    self.setup_menu_options
+    @menu_options = menus_hash.collect do |menu_key, menu_value|
+      MenuOption.new(menu_key, menu_value)
+    end
+
+    binding.pry
     self.setup_user_choices
 
     self.print_title
@@ -17,13 +18,6 @@ class CLI
 
   end
 
-  def setup_menu_options
-    @menu_options = {
-      platform_select: platform_select_content,
-      time_period_select: time_period_menu_content,
-      game_list: nil
-    }
-  end
 
   def setup_user_choices
     @user_choices = {
