@@ -6,6 +6,8 @@ module Menu
       puts "#{count}. #{value}"
       count += 1
     end
+
+    puts "#{count}. Quit"
   end
 
   def print_instructions
