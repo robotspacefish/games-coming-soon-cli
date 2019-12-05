@@ -18,18 +18,21 @@ class MenuOption
   end
 
   def print_menu
-    self.print_from_hash(self.menu)
+    if self.mode == :game_list
+      # binding.pry
+      self.print_game_list_menu
+    else
+      self.print_from_hash(self.menu)
+    end
+
     self.print_instructions
   end
 
-  # TODO move this somewhere
-  def game_list_content(games)
-    list = {}
-    games.each do |game|
-      game_sym = game.name.to_sym
-      list[game_sym] = game
+  def print_game_list_menu
+    self.menu.each.with_index(1) do |game, index|
+      if index != self.menu.length # quit
+        puts "#{index}. #{game.name} - #{game.release_date}"
+      end
     end
-    list[:quit] = "Quit"
-    list
   end
 end

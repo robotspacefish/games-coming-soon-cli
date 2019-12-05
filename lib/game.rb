@@ -62,13 +62,6 @@ class Game
     games
   end
 
-  def self.print_time_period_results(platform, time_period_sym)
-    games = self.time_period_results(platform, time_period_sym)
-    games.each.with_index(1) do |game, index|
-      puts "#{index}. #{game.name} - #{game.release_date}"
-    end
-  end
-
   def print_info
     puts self.name
     puts TODO GENRES GO HERE
