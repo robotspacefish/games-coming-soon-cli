@@ -14,9 +14,7 @@ class CLI
 
     self.scrape_coming_soon_games
     # self.scrape_all_individual_game_info
-
   end
-
 
   def setup_user_choices
     @user_choices = {

@@ -63,7 +63,6 @@ class Game
     end
 
     if time_period_sym == :seven_days
-      binding.pry
       games = games.select { |game| game.release_period == time_period_sym }
     end
 
