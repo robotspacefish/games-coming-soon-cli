@@ -8,13 +8,6 @@ module Menu
     end
   end
 
-  def print_menu(content = nil)
-    if content
-      print_from_hash(content)
-    end
-    print_instructions
-  end
-
   def print_game_list_menu(list_length)
     quit = list_length
     puts "#{quit}. Quit"

@@ -22,8 +22,8 @@ def time_period_menu_content
 end
 
 menus_hash = {
-  platform: platform_select_content,
-  time_period: time_period_menu_content,
+  platform_select: platform_select_content,
+  time_period_select: time_period_menu_content,
   game_list: []
 }
 

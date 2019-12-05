@@ -17,6 +17,11 @@ class MenuOption
     self.all.find { |menu| menu.mode == mode }
   end
 
+  def print_menu
+    self.print_from_hash(self.menu)
+    self.print_instructions
+  end
+
   # TODO move this somewhere
   def game_list_content(games)
     list = {}
