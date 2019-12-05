@@ -84,6 +84,20 @@ class CLI
     end
   end
 
+  def update(index)
+    case self.mode
+    when :platform_select
+      self.update_mode(:time_period_select)
+    when :time_period_select
+      selection = self.find_menu_content.to_a[index][0]
+      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+
+      self.update_game_list_content
+      self.update_mode(next_mode)
+    when :game_list
+    end
+  end
+
   def print_title
     puts "\nGames Coming Soon\n"
   end
@@ -110,20 +124,6 @@ class CLI
   def print_selection_feedback
     selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
     puts "\n***** You selected #{selection_str}. *****\n"
-  end
-
-  def update(index)
-    case self.mode
-    when :platform_select
-      self.update_mode(:time_period_select)
-    when :time_period_select
-      selection = self.find_menu_content.to_a[index][0]
-      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
-
-      self.update_game_list_content
-      self.update_mode(next_mode)
-    when :game_list
-    end
   end
 
   def update_game_list_content
