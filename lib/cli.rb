@@ -110,7 +110,7 @@ class CLI
   end
 
   def print_selection_feedback
-    selection_str = self.user_choices[mode].to_s.gsub("_", " ").capitalize
+    selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
     puts "\n***** You selected #{selection_str}. *****\n"
   end
 
