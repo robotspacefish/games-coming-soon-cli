@@ -40,14 +40,13 @@ class Scraper
   end
 
   def self.scrape_game(game)
-    url = "https://www.igdb.com#{game.url}"
-    html = open(url)
-    doc = Nokogiri::HTML(html)
-
+    doc = Nokogiri::HTML(open(game.url))
+binding.pry
     game.add_info({
       genres: doc.css("div.gamepage-tabs div:nth-child(2) p:nth-child(1)").text.gsub("Genre:", "").strip.split(", "),
       developers: doc.css("div.optimisly-game-maininfo a.block").text.strip.split(", "),
-      summary: doc.css("div.gamepage-tabs div:nth-child(2) div:nth-child(2)").text.gsub("\n", "").gsub("Read More", "").strip
+      summary: doc.css("div.gamepage-tabs div:nth-child(2) div:nth-child(2)").text.gsub("\n", "").gsub("Read More", "").strip,
+      info_scraped: true
     })
   end
 end
