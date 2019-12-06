@@ -15,7 +15,8 @@ class Scraper
       puts "Invalid type. Here are the results for all platforms"
     end
 
-    html = open(url)
+    # html = open(url)
+    html = File.read('fixtures/Coming Soon.html')
     doc = Nokogiri::HTML(html)
 
     content = doc.css('div.content div.pad div.row')
@@ -40,14 +41,13 @@ class Scraper
   end
 
   def self.scrape_game(game)
-    url = "https://www.igdb.com#{game.url}"
-    html = open(url)
-    doc = Nokogiri::HTML(html)
+    doc = Nokogiri::HTML(open(game.url))
 
     game.add_info({
       genres: doc.css("div.gamepage-tabs div:nth-child(2) p:nth-child(1)").text.gsub("Genre:", "").strip.split(", "),
       developers: doc.css("div.optimisly-game-maininfo a.block").text.strip.split(", "),
-      summary: doc.css("div.gamepage-tabs div:nth-child(2) div:nth-child(2)").text.gsub("\n", "").gsub("Read More", "").strip
+      summary: doc.css("div.gamepage-tabs > div:nth-child(2) > div:first-of-type").text.strip.gsub("Read More", ""),
+      info_scraped: true
     })
   end
 end

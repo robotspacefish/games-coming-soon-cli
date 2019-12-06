@@ -1,15 +1,16 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period,  :platform, :genres, :developers, :summary
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :platform, :genres, :developers, :summary, :info_scraped
   @@all = []
 
   def initialize()
     @genres = []
     @developers = []
+    @info_scraped = false
   end
 
-  def info_scraped?
-    self.summary || self.genres || self.developers
-  end
+  # def info_scraped?
+  #   self.summary.length != 0 || self.genres.length != 0
+  # end
 
   def self.create(games_hash)
     game = self.new

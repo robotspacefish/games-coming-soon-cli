@@ -13,18 +13,18 @@ class CLI
     puts "\nGathering data.... One moment please, this may take a while...\n"
 
     self.scrape_coming_soon_games
-    # self.scrape_all_individual_game_info
   end
 
   def setup_user_choices
     @user_choices = {
       platform_select: nil,
-      time_period_select: nil
+      time_period_select: nil,
+      start_over_select: nil
     }
   end
 
   def scrape_individual_game(game)
-    Scraper.scrape_game(game) if !game.info_scraped?
+    Scraper.scrape_game(game) if !game.info_scraped
   end
 
   def scrape_coming_soon_games
@@ -71,28 +71,44 @@ class CLI
 
   def print_to_cli
     case self.mode
-    when :platform_select
-      self.print_platform_select
+      when :platform_select
+        self.print_platform_select
 
-    when :time_period_select
-      self.print_time_period_select
+      when :time_period_select
+        self.print_time_period_select
 
-    when :game_list
-      self.print_game_list
+      when :game_list
+        self.print_game_list
+
+      when :individual_game
+        self.user_choices[:game_list].print_info
+        self.print_individual_game_select
     end
   end
 
   def update(index)
     case self.mode
-    when :platform_select
-      self.update_mode(:time_period_select)
-    when :time_period_select
-      selection = self.find_menu_content.to_a[index][0]
-      next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+      when :platform_select
+        self.update_mode(:time_period_select)
 
-      self.update_game_list_content
-      self.update_mode(next_mode)
-    when :game_list
+      when :time_period_select
+        selection = self.find_menu_content.to_a[index][0]
+        next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+
+        self.update_game_list_content
+        self.update_mode(next_mode)
+
+      when :game_list
+        game = self.user_choices[:game_list]
+        # binding.pry
+        if !game.info_scraped
+          puts "\nGathering information...\n"
+          scrape_individual_game(game)
+        end
+
+        self.update_mode(:individual_game)
+
+
     end
   end
 
@@ -110,6 +126,11 @@ class CLI
     self.find_menu(:time_period_select).print_menu
   end
 
+  def print_individual_game_select
+    puts "\n====== Menu ======\n"
+    self.find_menu(:individual_game).print_menu
+  end
+
   def print_game_list
     platform = self.user_choices[:platform_select]
     time_period = self.user_choices[:time_period_select]
@@ -120,7 +141,13 @@ class CLI
   end
 
   def print_selection_feedback
-    selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
+    selection_str = nil
+    if mode == :game_list
+      selection_str = self.user_choices[mode].name.upcase
+    else
+      selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
+    end
+
     puts "\n***** You selected #{selection_str}. *****\n"
   end
 
@@ -131,7 +158,14 @@ class CLI
   end
 
   def update_user_choice(index)
-    self.user_choices[mode] = self.find_menu_content.to_a[index][0]
+    choice = nil
+    if mode == :game_list
+      choice = self.find_menu_content[index]
+    else
+      choice = self.find_menu_content.to_a[index][0]
+    end
+
+    self.user_choices[mode] = choice
   end
 
   def update_mode(new_mode)

@@ -1,5 +1,4 @@
 class MenuOption
-  include Menu
   attr_accessor :mode, :menu
   @@all = []
 
@@ -37,5 +36,20 @@ class MenuOption
 
     puts "#{quit}. Quit"
     print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
+  end
+
+  def print_from_hash(content)
+    count = 1
+    puts "\n"
+    content.each do |key, value|
+      puts "#{count}. #{value}"
+      count += 1
+    end
+
+    puts "#{count}. Quit"
+  end
+
+  def print_instructions
+    print "\nEnter the number corresponding to your selection: "
   end
 end
