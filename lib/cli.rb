@@ -24,7 +24,7 @@ class CLI
   end
 
   def scrape_individual_game(game)
-    Scraper.scrape_game(game) if !game.info_scraped?
+    Scraper.scrape_game(game) if !game.info_scraped
   end
 
   def scrape_coming_soon_games
@@ -99,16 +99,15 @@ class CLI
         self.update_mode(next_mode)
 
       when :game_list
-        self.update_mode(:individual_game)
-
-      when :individual_game
-        binding.pry
-        if !game.info_scraped?
-          game = self.user_choices[:game_list]
+        game = self.user_choices[:game_list]
+        # binding.pry
+        if !game.info_scraped
+          puts "\nGathering information...\n"
           scrape_individual_game(game)
         end
 
-        # self.update_mode(:)
+        self.update_mode(:individual_game)
+
 
     end
   end

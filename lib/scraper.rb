@@ -41,11 +41,11 @@ class Scraper
 
   def self.scrape_game(game)
     doc = Nokogiri::HTML(open(game.url))
-binding.pry
+
     game.add_info({
       genres: doc.css("div.gamepage-tabs div:nth-child(2) p:nth-child(1)").text.gsub("Genre:", "").strip.split(", "),
       developers: doc.css("div.optimisly-game-maininfo a.block").text.strip.split(", "),
-      summary: doc.css("div.gamepage-tabs div:nth-child(2) div:nth-child(2)").text.gsub("\n", "").gsub("Read More", "").strip,
+      summary: doc.css("div.gamepage-tabs > div:nth-child(2) > div:first-of-type").text.strip.gsub("Read More", ""),
       info_scraped: true
     })
   end
