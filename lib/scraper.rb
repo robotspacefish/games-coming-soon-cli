@@ -41,7 +41,7 @@ class Scraper
   end
 
   def self.scrape_game(game)
-    doc = Nokogiri::HTML(open(game.url))
+    doc = Nokogiri::HTML(open("https://www.igdb.com#{game.url}"))
 
     game.add_info({
       genres: doc.css("div.gamepage-tabs div:nth-child(2) p:nth-child(1)").text.gsub("Genre:", "").strip.split(", "),
