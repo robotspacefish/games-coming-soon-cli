@@ -103,6 +103,7 @@ class CLI
         # binding.pry
         if !game.info_scraped
           puts "\nGathering information...\n"
+          puts "\n================================================================\n\n"
           scrape_individual_game(game)
         end
 
@@ -127,7 +128,7 @@ class CLI
   end
 
   def print_individual_game_select
-    puts "\n====== Menu ======\n"
+    puts "\n============================= Menu =============================\n"
     self.find_menu(:individual_game).print_menu
   end
 
