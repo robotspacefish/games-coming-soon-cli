@@ -31,8 +31,7 @@ class MenuOption
         output = index < 10 ? "0" : ""
         output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.to_s.upcase.ljust(20, '.')}#{game.release_date.rjust(17, '.')}"
 
-        puts index.even? ? output.yellow.on_black : output.black.on_yellow
-        # puts index.even? ? output.white.on_black : output.black.on_white
+        puts index.even? ? output.green.on_black : output.black.on_green
 
       end
     end
