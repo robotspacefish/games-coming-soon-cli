@@ -10,7 +10,7 @@ class CLI
     self.setup_user_choices
 
     self.print_title
-    puts "\nGathering data.... One moment please, this may take a while...\n"
+    puts "Gathering data.... One moment please, this may take a while...".yellow
 
     self.scrape_coming_soon_games
   end
@@ -59,11 +59,11 @@ class CLI
         self.print_selection_feedback
         self.update(index)
       elsif index == quit
-        puts "\nThanks for using Games Coming Soon. Goodbye!\n\n"
+        puts "\nThanks for using Games Coming Soon. Goodbye!".green
         exit
 
       else
-        puts "\nYou made an invalid selection.\n"
+        puts "\nYou made an invalid selection.".red
       end
 
     end
@@ -100,34 +100,37 @@ class CLI
 
       when :game_list
         game = self.user_choices[:game_list]
-        # binding.pry
+
         if !game.info_scraped
-          puts "\nGathering information...\n"
+          puts "\nGathering information...".yellow
+          puts "\n\n"
           scrape_individual_game(game)
         end
 
         self.update_mode(:individual_game)
 
+      when :individual_game
 
     end
   end
 
   def print_title
-    puts "\nGames Coming Soon\n"
+    puts "\nGames Coming Soon".black.bold.on_white
+    puts "\n"
   end
 
   def print_platform_select
-    puts "\n====== Platform Selection Menu ======\n"
+    puts "\n====== Platform Selection Menu ======".black.bold.on_white
     self.find_menu(:platform_select).print_menu
   end
 
   def print_time_period_select
-    puts "\n====== Time Period Selection Menu ======\n"
+    puts "\n====== Time Period Selection Menu ======".black.bold.on_white
     self.find_menu(:time_period_select).print_menu
   end
 
   def print_individual_game_select
-    puts "\n====== Menu ======\n"
+    puts "\n============================= Menu =============================".black.bold.on_white
     self.find_menu(:individual_game).print_menu
   end
 
@@ -135,7 +138,8 @@ class CLI
     platform = self.user_choices[:platform_select]
     time_period = self.user_choices[:time_period_select]
 
-    puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====\n\n"
+    puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====".black.bold.on_white
+    puts "\n"
 
     game_list = self.find_menu(:game_list).print_menu
   end
@@ -148,7 +152,7 @@ class CLI
       selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
     end
 
-    puts "\n***** You selected #{selection_str}. *****\n"
+    puts "\n***** You selected #{selection_str}. *****".green
   end
 
   def update_game_list_content

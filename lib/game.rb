@@ -71,10 +71,12 @@ class Game
   end
 
   def print_info
-    puts self.name
-    puts TODO GENRES GO HERE
-    puts self.developers
-    puts "\nSummary:"
-    puts self.summary
+    puts self.name.upcase.green.bold.underline
+    puts "\n"
+    puts "Developed by #{self.developers.green}"
+    puts "Published by #{self.publishers.green}"
+    puts "Genre(s): #{self.genres.green}"
+    puts "\nAbout:".bold.underline
+    puts self.about.green
   end
 end
