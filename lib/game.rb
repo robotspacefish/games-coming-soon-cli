@@ -1,10 +1,16 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :platform, :genres, :developers, :publishers, :about, :info_scraped
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :publishers, :about, :info_scraped
+  attr_reader :platform
   @@all = []
 
-  def initialize()
+  def initialize(platform = nil)
     @info_scraped = false
     @genres = []
+  end
+
+  def platform=(platform)
+    @platform = platform
+    platform.games << self if !platform.games.include?(self)
   end
 
   def self.create(games_hash)
@@ -14,7 +20,7 @@ class Game
     game.release_date = games_hash[:release_date]
     game.release_datetime = games_hash[:release_datetime]
     game.release_period = games_hash[:release_period]
-    game.platform = games_hash[:platform]
+    game.platform = Platform.find_or_create(games_hash[:platform])
 
     self.save(game) if !self.exists?(game)
   end
