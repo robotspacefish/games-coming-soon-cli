@@ -67,11 +67,11 @@ class Game
   end
 
   def print_info
-    puts self.name.upcase.green.bold.underline
+    puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
     puts "\n"
     puts "Developed by #{self.developers.green}"
     puts "Published by #{self.publishers.green}"
-    puts "Genre(s): #{self.genres.green}"
+    puts "Genre(s): #{self.genres.join(", ").green}"
     puts "\nAbout:".bold.underline
     puts self.about.green
   end
