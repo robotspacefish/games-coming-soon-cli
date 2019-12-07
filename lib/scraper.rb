@@ -15,8 +15,7 @@ class Scraper
       puts "Invalid type. Here are the results for all platforms"
     end
 
-    # html = open(url)
-    html = File.read('fixtures/Coming Soon.html')
+    html = open(url)
     doc = Nokogiri::HTML(html)
 
     content = doc.css('div.content div.pad div.row')
