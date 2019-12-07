@@ -28,14 +28,19 @@ class MenuOption
   def print_game_list_menu
     self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
-        puts "#{index}. #{game.name} - #{game.platform.upcase} - #{game.release_date}"
+        output = index < 10 ? "0" : ""
+        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.to_s.upcase.ljust(20, '.')}#{game.release_date.rjust(17, '.')}"
+
+        puts index.even? ? output.yellow.on_black : output.black.on_yellow
+        # puts index.even? ? output.white.on_black : output.black.on_white
+
       end
     end
 
     quit = self.menu.length
 
-    puts "#{quit}. Quit"
-    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
+    puts "#{quit}. Quit".red.bold
+    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: ".black.on_white
   end
 
   def print_from_hash(content)
@@ -46,10 +51,10 @@ class MenuOption
       count += 1
     end
 
-    puts "#{count}. Quit"
+    puts "#{count}. Quit".red.bold
   end
 
   def print_instructions
-    print "\nEnter the number corresponding to your selection: "
+    print "\nEnter the number corresponding to your selection: ".black.on_white
   end
 end
