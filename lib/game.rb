@@ -36,7 +36,7 @@ class Game
   end
 
   def self.all_of_platform_type(platform_sym)
-    self.all.select { |game| game.platform == platform_sym }
+    Platform.find_by_type(platform_sym).games
   end
 
   def self.print_all
