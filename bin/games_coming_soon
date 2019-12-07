@@ -21,8 +21,6 @@ individual_game_menu_content = {
   back_to_platform_select: "Back to Platform Selection"
 }
 
-
-
 menus_hash = {
   platform_select: platform_select_content,
   time_period_select: time_period_menu_content,

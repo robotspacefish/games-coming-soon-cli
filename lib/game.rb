@@ -1,16 +1,11 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :platform, :genres, :developers, :summary, :info_scraped
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :platform, :genres, :developers, :publishers, :about, :info_scraped
   @@all = []
 
   def initialize()
-    @genres = []
-    @developers = []
     @info_scraped = false
+    @genres = []
   end
-
-  # def info_scraped?
-  #   self.summary.length != 0 || self.genres.length != 0
-  # end
 
   def self.create(games_hash)
     game = self.new
@@ -49,9 +44,10 @@ class Game
   end
 
   def add_info(info_hash)
-    @genres = info_hash[:genres]
-    @developers = info_hash[:developers]
-    @summary = info_hash[:summary]
+    self.genres = info_hash[:genres].empty? ? "N/A" : info_hash[:genres]
+    self.publishers = info_hash[:publishers].empty? ? "N/A" : info_hash[:publishers]
+    self.developers = info_hash[:developers].empty? ? "N/A" : info_hash[:developers]
+    self.about = info_hash[:about].empty? ? "N/A" : info_hash[:about]
   end
 
   def self.time_period_results(platform_sym, time_period_sym)
