@@ -40,7 +40,7 @@ class MenuOption
     quit = self.menu.length
 
     puts "#{quit}. Quit".red.bold
-    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: ".black.on_white
+    print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
   end
 
   def print_from_hash(content)
@@ -55,6 +55,6 @@ class MenuOption
   end
 
   def print_instructions
-    print "\nEnter the number corresponding to your selection: ".black.on_white
+    print "\nEnter the number corresponding to your selection: "
   end
 end

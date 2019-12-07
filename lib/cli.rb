@@ -115,30 +115,36 @@ class CLI
   end
 
   def print_title
-    puts "\nGames Coming Soon".black.bold.on_white
+    puts "\n"
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+"
+    puts "|G|a|m|e|s| |C|o|m|i|n|g| |S|o|o|n|".red
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+"
     puts "\n"
   end
 
   def print_platform_select
-    puts "\n====== Platform Selection Menu ======".black.bold.on_white
+    puts "\n"
+    puts "#{' '.rjust(20, '=')} #{"Platform Selection Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
     self.find_menu(:platform_select).print_menu
   end
 
   def print_time_period_select
-    puts "\n====== Time Period Selection Menu ======".black.bold.on_white
+    puts "\n"
+    puts "#{' '.rjust(20, '=')} #{"Time Period Selection Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
     self.find_menu(:time_period_select).print_menu
   end
 
   def print_individual_game_select
-    puts "\n============================= Menu =============================".black.bold.on_white
+    puts "\n"
+    puts "#{' '.rjust(20, '=')} #{"Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
     self.find_menu(:individual_game).print_menu
   end
 
   def print_game_list
     platform = self.user_choices[:platform_select]
     time_period = self.user_choices[:time_period_select]
-
-    puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====".black.bold.on_white
+    puts "#{' '.rjust(20, '=')} #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} #{' '.ljust(20, '=')}".black.bold.on_white
+    # puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====".black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list).print_menu
