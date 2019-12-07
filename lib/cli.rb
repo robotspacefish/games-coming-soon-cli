@@ -124,19 +124,19 @@ class CLI
 
   def print_platform_select
     puts "\n"
-    puts "#{' '.rjust(20, '=')} #{"Platform Selection Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
+    puts "#{' '.rjust(40, '=')} #{"Platform Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     self.find_menu(:platform_select).print_menu
   end
 
   def print_time_period_select
     puts "\n"
-    puts "#{' '.rjust(20, '=')} #{"Time Period Selection Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
+    puts "#{' '.rjust(40, '=')} #{"Time Period Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     self.find_menu(:time_period_select).print_menu
   end
 
   def print_individual_game_select
     puts "\n"
-    puts "#{' '.rjust(20, '=')} #{"Menu"} #{' '.ljust(20, '=')}".black.bold.on_white
+    puts "#{' '.rjust(40, '=')} #{"Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     self.find_menu(:individual_game).print_menu
   end
 
@@ -158,7 +158,9 @@ class CLI
       selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
     end
 
-    puts "\n***** You selected #{selection_str}. *****".green
+    puts "\n"
+    puts "You selected #{selection_str}".green
+    puts "\n"
   end
 
   def update_game_list_content
