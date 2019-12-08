@@ -24,7 +24,7 @@ class CLI
   end
 
   def scrape_individual_game(game)
-    Scraper.scrape_game(game) if !game.info_scraped
+    Scraper.scrape_game_info_page(game) if !game.info_scraped
   end
 
   def scrape_coming_soon_games
@@ -34,7 +34,7 @@ class CLI
   end
 
   def scrape_all_individual_game_info
-    Game.all.each { |game| Scraper.scrape_game(game) }
+    Game.all.each { |game| Scraper.scrape_game_info_page(game) }
   end
 
   def find_menu(mode = self.mode)

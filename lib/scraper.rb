@@ -1,5 +1,43 @@
 class Scraper
   def self.scrape_coming_soon_page(type)
+    html = open(self.setup_main_url(type))
+    doc = Nokogiri::HTML(html)
+
+    scrape_games(doc, type)
+    scrape_next_pages_for_type(doc, type)
+  end
+
+  def self.scrape_next_pages_for_type(doc, type)
+    additional_platform_links = doc.css('ul.pagination').css('li a').collect do |link|
+      link.attribute("href").value
+    end
+    additional_platform_links.pop # remove 'Next' page link
+
+    additional_platform_links.each do |link|
+      base_url = 'https://www.igdb.com'
+      html = open(base_url + link)
+
+      scrape_games(Nokogiri::HTML(html), type)
+    end
+  end
+
+  def self.scrape_games(doc, type)
+    doc.css('tr').collect do |game|
+      create_game_from_scrape(game, type)
+    end
+  end
+
+  def self.create_game_from_scrape(game, type)
+    Game.create({
+      name: game.css('td')[1].text,
+      release_date: game.css('time').text,
+      release_datetime: game.css('time').attribute('datetime').value,
+      url: game.css('a').attribute('href').value,
+      platform: type
+    })
+  end
+
+  def self.setup_main_url(type)
     url = 'https://www.igdb.com/games/coming_soon'
     case type
     when :pc
@@ -10,37 +48,12 @@ class Scraper
       url += '?pfilter=49'
     when :switch
       url += '?pfilter=130'
-    when :all
-    else
-      puts "Invalid type. Here are the results for all platforms"
     end
 
-    html = open(url)
-    doc = Nokogiri::HTML(html)
-
-    content = doc.css('div.content div.pad div.row')
-    sections = [content.css('div:nth-child(1) div.media'), content.css('div:nth-child(2) div.media')]
-
-    sections.collect.with_index(0) do |section, index|
-      section.collect do |media|
-
-      media_body = media.css('div.media-body')
-        Game.create({
-          name: media_body.css('a').text.strip,
-          release_date: media_body.css('time').text.strip,
-          release_datetime: media_body.css('time').attribute('datetime').value,
-          url: media_body.css('a').attribute('href').value,
-          release_period: index == 0 ? :seven_days : :fourteen_days,
-          platform: type
-        })
-      end
-
-    end
-
+    url
   end
 
-  def self.scrape_game(game)
-
+  def self.scrape_game_info_page(game)
     doc = Nokogiri::HTML(open("https://www.igdb.com#{game.url}"))
 
     game.add_info({
