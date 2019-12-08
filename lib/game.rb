@@ -1,33 +1,60 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :publishers, :about, :info_scraped
+  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :publishers, :about, :info_scraped, :platforms
   attr_reader :platform
   @@all = []
 
   def initialize(platform = nil)
     @info_scraped = false
     @genres = []
+    @platforms = []
   end
 
   def platform=(platform)
     @platform = platform
+
     platform.games << self if !platform.games.include?(self)
   end
 
-  def self.create(games_hash)
-    game = self.new
-    game.name = games_hash[:name]
-    game.url = games_hash[:url]
-    game.release_date = games_hash[:release_date]
-    game.release_datetime = games_hash[:release_datetime]
-    game.release_period = games_hash[:release_period]
-    game.platform = Platform.find_or_create(games_hash[:platform])
+  def add_platform(platform)
+    self.platforms << Platform.find_or_create(platform)
+  end
 
-    self.save(game) if !self.exists?(game)
+  def self.find_game(game_hash)
+    self.all.find do |game|
+      game.name == game_hash[:name] && game.release_date == game_hash[:release_date]
+    end
+  end
+
+  def self.create(game_hash)
+    game = self.new
+    game.name = game_hash[:name]
+    game.url = game_hash[:url]
+    game.release_date = game_hash[:release_date]
+    game.release_datetime = game_hash[:release_datetime]
+    game.release_period = game_hash[:release_period]
+    game.platform = Platform.find_or_create(game_hash[:platform])
+    game.platforms << game.platform
+    self.save(game)
+  end
+
+  def self.create_or_add_platform(game_hash)
+
+    if self.exists?(game_hash)
+      game = self.find_game(game_hash)
+      game.add_platform(game_hash[:platform])
+      puts "adding platform #{game_hash[:platform]} to #{game_hash[:name]}".red
+      stored_game = Game.find_game(game_hash)
+      stored_game_platforms = stored_game.platforms.collect { |p| p.type }
+      puts "#{stored_game.name} platforms: #{stored_game_platforms.join(", ")}".yellow
+    else
+      puts "creating #{game_hash[:name]} for #{game_hash[:platform]}".green
+      self.create(game_hash)
+    end
   end
 
   def self.exists?(game_to_add)
-    self.all.detect do |game|
-      game.name == game_to_add.name && game.platform == game_to_add.platform
+    self.all.find do |game|
+      game.name == game_to_add[:name] && game.release_date == game_to_add[:release_date]
     end
   end
 
