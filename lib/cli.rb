@@ -111,7 +111,6 @@ class CLI
         self.update_mode(:individual_game)
 
       when :individual_game
-# binding.pry
         next_mode = self.find_menu_content.to_a[index][0]
         self.update_mode(next_mode)
     end

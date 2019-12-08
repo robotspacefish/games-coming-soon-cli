@@ -70,6 +70,7 @@ class Game
     self.publishers = info_hash[:publishers].empty? ? ["N/A"] : info_hash[:publishers]
     self.developers = info_hash[:developers].empty? ? ["N/A"] : info_hash[:developers]
     self.about = info_hash[:about].empty? ? "N/A" : info_hash[:about]
+    self.info_scraped = info_hash[:info_scraped]
   end
 
   def print_info
