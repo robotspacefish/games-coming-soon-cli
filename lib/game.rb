@@ -79,7 +79,7 @@ class Game
     puts "Developed by #{self.developers.join(", ").green}"
     puts "Published by #{self.publishers.join(", ").green}"
     puts "Genre(s): #{self.genres.join(", ").green}"
-    puts "Platform(s): #{self.platforms.collect { |p| p.type.capitalize }.join(", ").green}"
+    puts "Platform(s): #{self.platforms.collect { |p| p.type.upcase }.join(", ").green}"
     puts "\nAbout:".bold.underline
     puts self.about.green
   end
