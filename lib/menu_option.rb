@@ -32,7 +32,7 @@ class MenuOption
     self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
         output = index < 10 ? "0" : ""
-        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.type.to_s.upcase.ljust(20, '.')}#{game.release_date.rjust(17, '.')}"
+        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.type.to_s.upcase.ljust(20, '.')}#{game.release_date.date.rjust(17, '.')}"
 
         puts index.even? ? output.green.on_black : output.black.on_green
 
