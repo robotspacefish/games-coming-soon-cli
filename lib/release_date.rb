@@ -1,15 +1,15 @@
 class ReleaseDate
-  attr_accessor :day, :month, :year, :date
+  attr_accessor :day, :month, :year, :date, :datetime
 
   @@all = []
   @@month_words = [nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
   def initialize(release_date)
     @date = release_date
-    d = DateTime.strptime(release_date, '%Y-%m-%d')
-    @day = d.day
-    @month = d.month
-    @year = d.year
+    @datetime = DateTime.strptime(release_date, '%Y-%m-%d')
+    @day = @datetime.day
+    @month = @datetime.month
+    @year = @datetime.year
   end
 
   def self.all
@@ -51,5 +51,11 @@ class ReleaseDate
 
   def format_date
     "#{self.month}/#{self.day}/#{self.year}"
+  end
+
+  def self.sort_by_datetime(games)
+    games.sort! do |a, b|
+     a.release_date.datetime <=> b.release_date.datetime
+    end
   end
 end
