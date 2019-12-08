@@ -39,12 +39,7 @@ class Game
     if self.exists?(game_hash)
       game = self.find_game(game_hash)
       game.add_platform(game_hash[:platform])
-      # puts "adding platform #{game_hash[:platform]} to #{game_hash[:name]}".red
-      stored_game = Game.find_game(game_hash)
-      stored_game_platforms = stored_game.platforms.collect { |p| p.type }
-      # puts "#{stored_game.name} platforms: #{stored_game_platforms.join(", ")}".yellow
     else
-      # puts "creating #{game_hash[:name]} for #{game_hash[:platform]}".green
       self.create(game_hash)
     end
   end
