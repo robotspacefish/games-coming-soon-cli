@@ -17,7 +17,6 @@ class CLI
   def setup_user_choices
     @user_choices = {
       platform_select: nil,
-      # time_period_select: nil,
       month_select: nil,
       start_over_select: nil
     }
@@ -75,9 +74,6 @@ class CLI
       when :platform_select
         self.print_platform_select
 
-      # when :time_period_select
-      #   self.print_time_period_select
-
        when :month_select
         self.print_month_select
 
@@ -93,15 +89,8 @@ class CLI
   def update(index)
     case self.mode
       when :platform_select
-        # self.update_mode(:time_period_select)
         self.update_month_select_content
         self.update_mode(:month_select)
-      # when :time_period_select
-      #   selection = self.find_menu_content.to_a[index][0]
-      #   next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
-
-      #   self.update_game_list_content
-      #   self.update_mode(next_mode)
 
       when :month_select
         selection = self.find_menu_content[index]
@@ -139,12 +128,6 @@ class CLI
     puts "#{' '.rjust(40, '=')} #{"Platform Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     self.find_menu(:platform_select).print_menu
   end
-
-  # def print_time_period_select
-  #   puts "\n"
-  #   puts "#{' '.rjust(40, '=')} #{"Time Period Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
-  #   self.find_menu(:time_period_select).print_menu
-  # end
 
   def print_month_select
     puts "\n"

@@ -9,12 +9,6 @@ platform_select_content = {
   switch: "Nintendo Switch"
 }
 
-time_period_menu_content = {
-  seven_days: "7 Days",
-  fourteen_days: "14 Days",
-  back_to_platform_select: "Back to Platform Selection"
-}
-
 individual_game_menu_content = {
   back_to_game_select: "Back to Game Selection",
   back_to_time_period_select: "Back to Time Period Selection",
