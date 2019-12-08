@@ -80,21 +80,6 @@ class Game
     self.about = info_hash[:about].empty? ? "N/A" : info_hash[:about]
   end
 
-  # def self.month_results(platform_sym, month)
-  #   games = nil
-  #   if platform_sym == :all
-  #     games = self.all
-  #   else
-  #     games = all_of_platform_type(platform_sym)
-  #   end
-
-  #   if time_period_sym == :seven_days
-  #     games = games.select { |game| game.release_period == time_period_sym }
-  #   end
-
-  #   games
-  # end
-
   def print_info
     puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
     puts "\n"
