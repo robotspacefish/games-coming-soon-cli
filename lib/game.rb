@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :name, :url, :release_date, :release_datetime, :release_period, :genres, :developers, :publishers, :about, :info_scraped, :platforms
+  attr_accessor :name, :url, :release_date, :genres, :developers, :publishers, :about, :info_scraped, :platforms
   attr_reader :platform
   @@all = []
 
@@ -21,7 +21,7 @@ class Game
 
   def self.find_game(game_hash)
     self.all.find do |game|
-      game.name == game_hash[:name] && game.release_date == game_hash[:release_date]
+      game.name == game_hash[:name] && game.release_date.date == game_hash[:release_date]
     end
   end
 
@@ -29,9 +29,7 @@ class Game
     game = self.new
     game.name = game_hash[:name]
     game.url = game_hash[:url]
-    game.release_date = game_hash[:release_date]
-    game.release_datetime = game_hash[:release_datetime]
-    game.release_period = game_hash[:release_period]
+    game.release_date = ReleaseDate.find_or_create(game_hash[:release_date])
     game.platform = Platform.find_or_create(game_hash[:platform])
     game.platforms << game.platform
     self.save(game)
