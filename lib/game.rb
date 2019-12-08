@@ -92,4 +92,10 @@ class Game
     end
   end
 
+  def self.unique_months
+    self.all.collect do |game|
+      game.release_date.month
+    end.uniq
+  end
+
 end

@@ -153,7 +153,11 @@ class CLI
     puts " #{platform.to_s.upcase} Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
     puts "\n"
 
-    game_list = self.find_menu(:game_list).print_menu
+    game_list = self.find_menu(:game_list)
+
+    platform == :all ? game_list.print_menu(:all) : game_list.print_menu
+
+    # game_list = self.find_menu(:game_list).print_menu
   end
 
   def print_selection_feedback
@@ -174,7 +178,14 @@ class CLI
   def update_game_list_content
     month = self.user_choices[:month_select]
     platform_sym = self.user_choices[:platform_select]
-    games = Game.find_games_by_platform_within_month(platform_sym, month)
+    games = nil
+
+    if platform_sym == :all
+      games = ReleaseDate.find_games_by_month(month)
+      ReleaseDate.sort_by_datetime(games)
+    else
+      games = Game.find_games_by_platform_within_month(platform_sym, month)
+    end
 
     self.create_game_list_menu(games)
   end
@@ -185,7 +196,14 @@ class CLI
 
   def update_month_select_content
     platform = self.user_choices[:platform_select]
-    dates = Platform.find_by_type(platform).unique_months
+    dates = nil
+
+    if platform == :all
+      dates = Game.unique_months
+    else
+      dates = Platform.find_by_type(platform).unique_months
+    end
+
 
     menu = self.find_menu(:month_select)
     menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
