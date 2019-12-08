@@ -1,17 +1,11 @@
 class Game
-  attr_accessor :name, :url, :release_date, :genres, :developers, :publishers, :about, :info_scraped, :platforms
-  attr_reader :platform
+  attr_accessor :name, :url, :release_date, :genres, :developers, :publishers, :about, :info_scraped, :platforms, :platform
   @@all = []
 
   def initialize(platform = nil)
     @info_scraped = false
     @genres = []
     @platforms = []
-  end
-
-  def platform=(platform)
-    @platform = platform
-    platform.games << self if !platform.games.include?(self)
   end
 
   def add_platform(platform)
@@ -45,7 +39,7 @@ class Game
 
   def self.exists?(game_to_add)
     self.all.find do |game|
-      game.name == game_to_add[:name] && game.release_date == game_to_add[:release_date]
+      game.name == game_to_add[:name]
     end
   end
 
@@ -75,7 +69,6 @@ class Game
   end
 
   def print_info
-    binding.pry
     puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
     puts "\n"
     puts "Developed by #{self.developers.green}"
