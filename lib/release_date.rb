@@ -2,6 +2,7 @@ class ReleaseDate
   attr_accessor :day, :month, :year, :date
 
   @@all = []
+  @@month_words = [nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
   def initialize(release_date)
     @date = release_date
@@ -9,6 +10,10 @@ class ReleaseDate
     @day = d.day
     @month = d.month
     @year = d.year
+  end
+
+  def self.month_words
+    @@month_words
   end
 
   def games
@@ -68,9 +73,5 @@ class ReleaseDate
 
   def self.find_all_unique_months
    self.all.collect { |r| r.month }.uniq
-  end
-
-  def self.get_month_as_word(month)
-    # TODO
   end
 end

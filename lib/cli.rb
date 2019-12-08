@@ -194,7 +194,7 @@ class CLI
     platform = self.user_choices[:platform_select]
     dates = Platform.find_by_type(platform).unique_months
     menu = self.find_menu(:month_select)
-    menu.menu = dates
+    menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
     menu.menu << "Back to Platform Selection"
   end
 
