@@ -6,7 +6,6 @@ class CLI
     menus_hash.each do |menu_key, menu_value|
       MenuOption.new(menu_key, menu_value)
     end
-
     self.setup_user_choices
 
     self.print_title
@@ -18,7 +17,7 @@ class CLI
   def setup_user_choices
     @user_choices = {
       platform_select: nil,
-      time_period_select: nil,
+      month_select: nil,
       start_over_select: nil
     }
   end
@@ -58,6 +57,7 @@ class CLI
         self.update_user_choice(index)
         self.print_selection_feedback
         self.update(index)
+
       elsif index == quit
         puts "\nThanks for using Games Coming Soon. Goodbye!".green
         exit
@@ -74,8 +74,8 @@ class CLI
       when :platform_select
         self.print_platform_select
 
-      when :time_period_select
-        self.print_time_period_select
+       when :month_select
+        self.print_month_select
 
       when :game_list
         self.print_game_list
@@ -89,11 +89,12 @@ class CLI
   def update(index)
     case self.mode
       when :platform_select
-        self.update_mode(:time_period_select)
+        self.update_month_select_content
+        self.update_mode(:month_select)
 
-      when :time_period_select
-        selection = self.find_menu_content.to_a[index][0]
-        next_mode = selection == :back_to_platform_select ? :platform_select : :game_list
+      when :month_select
+        selection = self.find_menu_content[index]
+        next_mode = selection == "Back to Platform Selection" ? :platform_select : :game_list
 
         self.update_game_list_content
         self.update_mode(next_mode)
@@ -128,10 +129,10 @@ class CLI
     self.find_menu(:platform_select).print_menu
   end
 
-  def print_time_period_select
+  def print_month_select
     puts "\n"
-    puts "#{' '.rjust(40, '=')} #{"Time Period Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
-    self.find_menu(:time_period_select).print_menu
+    puts "#{' '.rjust(40, '=')} #{"Upcoming Month Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    self.find_menu(:month_select).print_menu
   end
 
   def print_individual_game_select
@@ -142,9 +143,10 @@ class CLI
 
   def print_game_list
     platform = self.user_choices[:platform_select]
-    time_period = self.user_choices[:time_period_select]
-    puts "#{' '.rjust(20, '=')} #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} #{' '.ljust(20, '=')}".black.bold.on_white
-    # puts "\n===== #{platform.upcase} Games Coming Out in #{time_period.to_s.gsub("_", " ").capitalize} =====".black.bold.on_white
+
+    month = self.user_choices[:month_select]
+
+    puts "#{' '.rjust(20, '=')} #{platform.upcase} Games Coming Out in #{month.capitalize} #{' '.ljust(20, '=')}".black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list).print_menu
@@ -154,6 +156,8 @@ class CLI
     selection_str = nil
     if mode == :game_list
       selection_str = self.user_choices[mode].name.upcase
+    elsif mode == :month_select
+      selection_str = self.user_choices[mode].upcase
     else
       selection_str = self.user_choices[mode].to_s.upcase.gsub("_", " ")
     end
@@ -164,14 +168,26 @@ class CLI
   end
 
   def update_game_list_content
-    games = Game.time_period_results(self.user_choices[:platform_select], self.user_choices[:time_period_select])
+    platform = self.user_choices[:platform_select]
+    month = self.user_choices[:month_select]
 
+    games = Game.all.select do |game|
+      game.platform.type == platform && game.release_date.month == ReleaseDate.month_words.index { |word| word == month }
+    end
     self.find_menu(:game_list).menu = games
+  end
+
+  def update_month_select_content
+    platform = self.user_choices[:platform_select]
+    dates = Platform.find_by_type(platform).unique_months
+    menu = self.find_menu(:month_select)
+    menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
+    menu.menu << "Back to Platform Selection"
   end
 
   def update_user_choice(index)
     choice = nil
-    if mode == :game_list
+    if mode == :game_list || mode == :month_select
       choice = self.find_menu_content[index]
     else
       choice = self.find_menu_content.to_a[index][0]

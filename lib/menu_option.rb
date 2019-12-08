@@ -19,6 +19,9 @@ class MenuOption
   def print_menu
     if self.mode == :game_list
       self.print_game_list_menu
+    elsif self.mode == :month_select
+      self.print_from_array(self.menu)
+      self.print_instructions
     else
       self.print_from_hash(self.menu)
       self.print_instructions
@@ -29,7 +32,7 @@ class MenuOption
     self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
         output = index < 10 ? "0" : ""
-        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.type.to_s.upcase.ljust(20, '.')}#{game.release_date.rjust(17, '.')}"
+        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.type.to_s.upcase.ljust(20, '.')}#{game.release_date.date.rjust(17, '.')}"
 
         puts index.even? ? output.green.on_black : output.black.on_green
 
@@ -51,6 +54,19 @@ class MenuOption
     end
 
     puts "#{count}. Quit".red.bold
+  end
+
+  def print_from_array(content)
+    puts "\n"
+    content.each.with_index(1) do |item, index|
+      puts "#{index}. #{item}"
+    end
+    puts "#{content.length + 1}. Quit".red.bold
+  end
+
+  def print_month_select_menu
+
+
   end
 
   def print_instructions

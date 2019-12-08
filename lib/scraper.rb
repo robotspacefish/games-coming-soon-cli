@@ -30,8 +30,7 @@ class Scraper
   def self.create_game_from_scrape(game, type)
     Game.create_or_add_platform({
       name: game.css('td')[1].text,
-      release_date: game.css('time').text,
-      release_datetime: game.css('time').attribute('datetime').value,
+      release_date: game.css('time').attribute('datetime').value,
       url: game.css('a').attribute('href').value,
       platform: type
     })

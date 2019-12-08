@@ -21,6 +21,10 @@ class Platform
     self.all.find { |platform| platform.type == type }
   end
 
+  def games
+    Game.all.select { |g| g.platform == self }
+  end
+
   def self.find_or_create(type)
     platform = self.find_by_type(type)
     platform ? platform : self.create(type)
@@ -30,5 +34,9 @@ class Platform
     self.class.all << self
   end
 
-
+  def unique_months
+    self.games.collect do |game|
+      game.release_date.month
+    end.uniq
+  end
 end
