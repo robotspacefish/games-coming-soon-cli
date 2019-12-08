@@ -56,8 +56,8 @@ class Scraper
     doc = Nokogiri::HTML(open("https://www.igdb.com#{game.url}"))
 
     game.add_info({
-      publishers: doc.xpath("//span[@itemprop='publisher']").text,
-      developers: doc.xpath("//div[@itemprop='author']").text,
+      publishers: doc.xpath("//span[@itemprop='publisher']").collect { |g| g.text },
+      developers: doc.xpath("//div[@itemprop='author']").collect { |g| g.text },
       genres: doc.xpath("//a[@itemprop='genre']").collect { |g| g.text },
       about: doc.css("div.gamepage-tabs > div:nth-child(2) > div:first-of-type").text.gsub("Read More", "").strip,
       info_scraped: true
