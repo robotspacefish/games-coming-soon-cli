@@ -14,7 +14,7 @@ class Game
 
   def self.find_game(game_hash)
     self.all.find do |game|
-      game.name == game_hash[:name] && game.release_date.date == game_hash[:release_date]
+      game.name == game_hash[:name]
     end
   end
 
@@ -26,6 +26,10 @@ class Game
     game.platform = Platform.find_or_create(game_hash[:platform])
     game.platforms << game.platform
     self.save(game)
+  end
+
+  def self.find_by_name(name)
+    self.all.find { |g| g.name == name }
   end
 
   def self.create_or_add_platform(game_hash)
@@ -80,13 +84,12 @@ class Game
     puts self.about.green
   end
 
-  def self.find_games_by_platform_within_month(platform, month)
-    games = Platform.find_all_by_type(platform)
-    games = games.ReleaseDate.find_all_by_month(month)
-    games
+  def self.find_games_by_platform_within_month(platform_sym, month)
+    platform  = Platform.find_by_type(platform_sym)
+    games_in_month = ReleaseDate.find_games_by_month(month)
+    games_in_month.select do |game|
+      game.platforms.include?(platform)
+    end
   end
 
-  def self.find_months_by_platform(platform)
-
-  end
 end
