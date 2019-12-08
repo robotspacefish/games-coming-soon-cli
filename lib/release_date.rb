@@ -49,7 +49,7 @@ class ReleaseDate
     Game.all.select { |game| game.release_date == self }
   end
 
-  def print_date
-    puts "#{self.month}/#{self.day}/#{self.year}"
+  def format_date
+    "#{self.month}/#{self.day}/#{self.year}"
   end
 end
