@@ -29,15 +29,14 @@ class MenuOption
   end
 
   def print_game_list_menu
+
     self.menu.each.with_index(1) do |game, index|
-      if index != self.menu.length # quit
         output = index < 10 ? "0" : ""
         output += "#{index}. #{game.name.ljust(60)}#{game.release_date.date.rjust(20)}"
         puts index.even? ? output.green.on_black : output.black.on_green
-      end
     end
 
-    quit = self.menu.length
+    quit = self.menu.length + 1
 
     puts "#{quit}. Quit".red.bold
     print "\nEnter the number corresponding to the game you want to see more info about, or enter #{quit} to quit: "
