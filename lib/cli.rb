@@ -111,7 +111,9 @@ class CLI
         self.update_mode(:individual_game)
 
       when :individual_game
-
+# binding.pry
+        next_mode = self.find_menu_content.to_a[index][0]
+        self.update_mode(next_mode)
     end
   end
 
@@ -125,7 +127,6 @@ class CLI
 
   def print_platform_select
     puts "\n"
-    # puts "#{' '.rjust(40, '=')} #{"Platform Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     puts " Platform Selection Menu ".center(80, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:platform_select).print_menu
@@ -133,7 +134,6 @@ class CLI
 
   def print_month_select
     puts "\n"
-    # puts "#{' '.rjust(40, '=')} #{"Upcoming Month Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     puts " Upcoming Month Selection Menu ".center(80, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:month_select).print_menu
@@ -148,16 +148,14 @@ class CLI
 
   def print_game_list
     platform = self.user_choices[:platform_select]
-
     month = self.user_choices[:month_select]
+
     puts " #{platform.to_s.upcase} Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list)
 
     platform == :all ? game_list.print_menu(:all) : game_list.print_menu
-
-    # game_list = self.find_menu(:game_list).print_menu
   end
 
   def print_selection_feedback
