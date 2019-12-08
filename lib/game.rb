@@ -11,7 +11,6 @@ class Game
 
   def platform=(platform)
     @platform = platform
-
     platform.games << self if !platform.games.include?(self)
   end
 
@@ -40,12 +39,12 @@ class Game
     if self.exists?(game_hash)
       game = self.find_game(game_hash)
       game.add_platform(game_hash[:platform])
-      puts "adding platform #{game_hash[:platform]} to #{game_hash[:name]}".red
+      # puts "adding platform #{game_hash[:platform]} to #{game_hash[:name]}".red
       stored_game = Game.find_game(game_hash)
       stored_game_platforms = stored_game.platforms.collect { |p| p.type }
-      puts "#{stored_game.name} platforms: #{stored_game_platforms.join(", ")}".yellow
+      # puts "#{stored_game.name} platforms: #{stored_game_platforms.join(", ")}".yellow
     else
-      puts "creating #{game_hash[:name]} for #{game_hash[:platform]}".green
+      # puts "creating #{game_hash[:name]} for #{game_hash[:platform]}".green
       self.create(game_hash)
     end
   end
@@ -81,21 +80,20 @@ class Game
     self.about = info_hash[:about].empty? ? "N/A" : info_hash[:about]
   end
 
-  def self.time_period_results(platform_sym, time_period_sym)
-    # note: all games of platform type print for 14 day time period
-    games = nil
-    if platform_sym == :all
-      games = self.all
-    else
-      games = all_of_platform_type(platform_sym)
-    end
+  # def self.month_results(platform_sym, month)
+  #   games = nil
+  #   if platform_sym == :all
+  #     games = self.all
+  #   else
+  #     games = all_of_platform_type(platform_sym)
+  #   end
 
-    if time_period_sym == :seven_days
-      games = games.select { |game| game.release_period == time_period_sym }
-    end
+  #   if time_period_sym == :seven_days
+  #     games = games.select { |game| game.release_period == time_period_sym }
+  #   end
 
-    games
-  end
+  #   games
+  # end
 
   def print_info
     puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
@@ -105,5 +103,15 @@ class Game
     puts "Genre(s): #{self.genres.join(", ").green}"
     puts "\nAbout:".bold.underline
     puts self.about.green
+  end
+
+  def self.find_games_by_platform_within_month(platform, month)
+    games = Platform.find_all_by_type(platform)
+    games = games.ReleaseDate.find_all_by_month(month)
+    games
+  end
+
+  def self.find_months_by_platform(platform)
+
   end
 end
