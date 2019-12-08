@@ -39,8 +39,7 @@ class Scraper
 
   end
 
-  def self.scrape_game(game)
-
+  def self.scrape_game_info_page(game)
     doc = Nokogiri::HTML(open("https://www.igdb.com#{game.url}"))
 
     game.add_info({
