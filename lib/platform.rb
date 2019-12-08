@@ -1,5 +1,5 @@
 class Platform
-  attr_accessor :type, :games
+  attr_accessor :type
   @@all = []
 
   def initialize(type)
@@ -22,7 +22,7 @@ class Platform
   end
 
   def games
-    Game.all.select { |g| g.platform == self }
+    Game.all.select { |g| g.platforms.include?(self) }
   end
 
   def self.find_or_create(type)

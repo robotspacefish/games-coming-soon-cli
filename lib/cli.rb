@@ -173,18 +173,17 @@ class CLI
   end
 
   def update_game_list_content
-    platform = self.user_choices[:platform_select]
     month = self.user_choices[:month_select]
+    platform_sym = self.user_choices[:platform_select]
+    games = Game.find_games_by_platform_within_month(platform_sym, month)
 
-    games = Game.all.select do |game|
-      game.platform.type == platform && game.release_date.month == ReleaseDate.month_words.index { |word| word == month }
-    end
     self.find_menu(:game_list).menu = games
   end
 
   def update_month_select_content
     platform = self.user_choices[:platform_select]
     dates = Platform.find_by_type(platform).unique_months
+
     menu = self.find_menu(:month_select)
     menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
     menu.menu << "Back to Platform Selection"

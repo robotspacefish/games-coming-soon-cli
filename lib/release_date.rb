@@ -55,6 +55,12 @@ class ReleaseDate
     self.all.select { |r| r.month == month }
   end
 
+  def self.find_games_by_month(month)
+    Game.all.select do |game|
+      game.release_date.month == self.month_words.index { |word| word == month }
+    end
+  end
+
   def self.find_all_by_day(day)
     self.all.select { |r| r.day == day }
   end
