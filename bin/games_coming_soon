@@ -17,7 +17,6 @@ individual_game_menu_content = {
 
 menus_hash = {
   platform_select: platform_select_content,
-  time_period_select: time_period_menu_content,
   game_list: [],
   month_select: [],
   individual_game: individual_game_menu_content

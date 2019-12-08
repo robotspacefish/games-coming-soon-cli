@@ -35,7 +35,6 @@ class Game
   end
 
   def self.create_or_add_platform(game_hash)
-
     if self.exists?(game_hash)
       game = self.find_game(game_hash)
       game.add_platform(game_hash[:platform])
@@ -76,11 +75,13 @@ class Game
   end
 
   def print_info
+    binding.pry
     puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
     puts "\n"
     puts "Developed by #{self.developers.green}"
     puts "Published by #{self.publishers.green}"
     puts "Genre(s): #{self.genres.join(", ").green}"
+    puts "Platform(s): #{self.platforms.collect { |p| p.type.capitalize }.join(", ").green}"
     puts "\nAbout:".bold.underline
     puts self.about.green
   end
