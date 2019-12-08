@@ -57,4 +57,20 @@ class ReleaseDate
   def self.find_all_by_year(year)
     self.all.select { |r| r.year == year }
   end
+
+  def self.find_all_by_month_and_year(month, year)
+    self.all.select { |r| r.month == month && r.year == year }
+  end
+
+  def self.find_all_unique_dates
+    self.all.collect { |r| r.date }.uniq
+  end
+
+  def self.find_all_unique_months
+   self.all.collect { |r| r.month }.uniq
+  end
+
+  def self.get_month_as_word(month)
+    # TODO
+  end
 end
