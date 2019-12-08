@@ -151,7 +151,7 @@ class CLI
     platform = self.user_choices[:platform_select]
 
     month = self.user_choices[:month_select]
-    puts " Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
+    puts " #{platform.to_s.upcase} Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list).print_menu
