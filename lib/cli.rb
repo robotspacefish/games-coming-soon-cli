@@ -32,9 +32,9 @@ class CLI
     end
   end
 
-  def scrape_all_individual_game_info
-    Game.all.each { |game| Scraper.scrape_game_info_page(game) }
-  end
+  # def scrape_all_individual_game_info
+  #   Game.all.each { |game| Scraper.scrape_game_info_page(game) }
+  # end
 
   def find_menu(mode = self.mode)
     MenuOption.find_menu(mode)
@@ -141,7 +141,6 @@ class CLI
 
   def print_individual_game_select
     puts "\n"
-    # puts "#{' '.rjust(40, '=')} #{"Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
     puts " Menu ".center(80, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:individual_game).print_menu
@@ -177,7 +176,11 @@ class CLI
     platform_sym = self.user_choices[:platform_select]
     games = Game.find_games_by_platform_within_month(platform_sym, month)
 
-    self.find_menu(:game_list).menu = games
+    self.create_game_list_menu(games)
+  end
+
+  def create_game_list_menu(games)
+    find_menu(:game_list).menu = games
   end
 
   def update_month_select_content
