@@ -66,20 +66,20 @@ class Game
   end
 
   def add_info(info_hash)
-    self.genres = info_hash[:genres].empty? ? "N/A" : info_hash[:genres]
-    self.publishers = info_hash[:publishers].empty? ? "N/A" : info_hash[:publishers]
-    self.developers = info_hash[:developers].empty? ? "N/A" : info_hash[:developers]
+    self.genres = info_hash[:genres].empty? ? ["N/A"] : info_hash[:genres]
+    self.publishers = info_hash[:publishers].empty? ? ["N/A"] : info_hash[:publishers]
+    self.developers = info_hash[:developers].empty? ? ["N/A"] : info_hash[:developers]
     self.about = info_hash[:about].empty? ? "N/A" : info_hash[:about]
   end
 
   def print_info
     puts " #{self.name} ".center(80, padstr="=").green.on_black
     puts "\n"
-    puts "\n"
-    puts "Developed by #{self.developers.green}"
-    puts "Published by #{self.publishers.green}"
+    puts "Release Date: #{self.release_date.format_date.green}"
+    puts "Developed by #{self.developers.join(", ").green}"
+    puts "Published by #{self.publishers.join(", ").green}"
     puts "Genre(s): #{self.genres.join(", ").green}"
-    puts "Platform(s): #{self.platforms.collect { |p| p.type.capitalize }.join(", ").green}"
+    puts "Platform(s): #{self.platforms.collect { |p| p.type.upcase }.join(", ").green}"
     puts "\nAbout:".bold.underline
     puts self.about.green
   end
