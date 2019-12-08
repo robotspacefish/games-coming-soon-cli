@@ -69,7 +69,8 @@ class Game
   end
 
   def print_info
-    puts "#{' '.rjust(20, '=')} #{self.name} #{' '.ljust(20, '=')}".green.on_black
+    puts " #{self.name} ".center(80, padstr="=").green.on_black
+    puts "\n"
     puts "\n"
     puts "Developed by #{self.developers.green}"
     puts "Published by #{self.publishers.green}"

@@ -117,27 +117,33 @@ class CLI
 
   def print_title
     puts "\n"
-    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+"
-    puts "|G|a|m|e|s| |C|o|m|i|n|g| |S|o|o|n|".red
-    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+"
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(80)
+    puts "|G|a|m|e|s| |C|o|m|i|n|g| |S|o|o|n|".center(80).red
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(80)
     puts "\n"
   end
 
   def print_platform_select
     puts "\n"
-    puts "#{' '.rjust(40, '=')} #{"Platform Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    # puts "#{' '.rjust(40, '=')} #{"Platform Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    puts " Platform Selection Menu ".center(80, padstr="=").black.bold.on_white
+    puts "\n"
     self.find_menu(:platform_select).print_menu
   end
 
   def print_month_select
     puts "\n"
-    puts "#{' '.rjust(40, '=')} #{"Upcoming Month Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    # puts "#{' '.rjust(40, '=')} #{"Upcoming Month Selection Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    puts " Upcoming Month Selection Menu ".center(80, padstr="=").black.bold.on_white
+    puts "\n"
     self.find_menu(:month_select).print_menu
   end
 
   def print_individual_game_select
     puts "\n"
-    puts "#{' '.rjust(40, '=')} #{"Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    # puts "#{' '.rjust(40, '=')} #{"Menu"} #{' '.ljust(40, '=')}".black.bold.on_white
+    puts " Menu ".center(80, padstr="=").black.bold.on_white
+    puts "\n"
     self.find_menu(:individual_game).print_menu
   end
 
@@ -145,8 +151,7 @@ class CLI
     platform = self.user_choices[:platform_select]
 
     month = self.user_choices[:month_select]
-
-    puts "#{' '.rjust(20, '=')} #{platform.upcase} Games Coming Out in #{month.capitalize} #{' '.ljust(20, '=')}".black.bold.on_white
+    puts " Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list).print_menu

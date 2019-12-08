@@ -32,10 +32,8 @@ class MenuOption
     self.menu.each.with_index(1) do |game, index|
       if index != self.menu.length # quit
         output = index < 10 ? "0" : ""
-        output += "#{index}. #{game.name.ljust(50, '.')}#{game.platform.type.to_s.upcase.ljust(20, '.')}#{game.release_date.date.rjust(17, '.')}"
-
+        output += "#{index}. #{game.name.ljust(60)}#{game.release_date.date.rjust(20)}"
         puts index.even? ? output.green.on_black : output.black.on_green
-
       end
     end
 
@@ -62,11 +60,6 @@ class MenuOption
       puts "#{index}. #{item}"
     end
     puts "#{content.length + 1}. Quit".red.bold
-  end
-
-  def print_month_select_menu
-
-
   end
 
   def print_instructions
