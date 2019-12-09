@@ -33,6 +33,8 @@ class Game
   end
 
   def self.create_or_add_platform(game_hash)
+    return if self.should_skip_game?(game_hash[:release_date])
+
     if self.exists?(game_hash)
       game = self.find_game(game_hash)
       game.add_platform(game_hash[:platform])
@@ -99,4 +101,10 @@ class Game
     end.uniq
   end
 
+  def self.should_skip_game?(release_date)
+    # don't store games releasing over a year from now
+    r = DateTime.strptime(release_date, '%Y-%m-%d')
+    now = Time.now
+    r.month.to_i == now.month.to_i && r.year.to_i > now.year.to_i + 1
+  end
 end
