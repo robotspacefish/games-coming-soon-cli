@@ -174,10 +174,19 @@ class CLI
     games = nil
 
     if platform_sym == :all
-      games = ReleaseDate.find_games_by_month(month)
+      if month == "All Months"
+        games = Game.all
+      else
+        games = ReleaseDate.find_games_by_month(month)
+      end
+
       ReleaseDate.sort_by_datetime(games)
     else
-      games = Game.find_games_by_platform_within_month(platform_sym, month)
+      if month == "All Months"
+        games = Game.all_of_platform_type(platform_sym)
+      else
+        games = Game.find_games_by_platform_within_month(platform_sym, month)
+      end
     end
 
     self.create_game_list_menu(games)
@@ -200,6 +209,7 @@ class CLI
 
     menu = self.find_menu(:month_select)
     menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
+    menu.menu << "All Months"
     menu.menu << "Back to Platform Selection"
   end
 
