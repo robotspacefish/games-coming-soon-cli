@@ -32,7 +32,7 @@ class MenuOption
     self.menu.each.with_index(1) do |game, index|
         output = index < 10 ? "0" : ""
         if platform == :all
-          output += "#{index}. #{game.name.ljust(60)}#{game.release_date.date.rjust(20)}   #{game.platforms.collect{ |p| p.type.upcase }.join("|").ljust(20)}"
+          output += "#{index}. #{game.name.ljust(60)}#{game.release_date.format_date.rjust(20)}   #{game.platforms.collect{ |p| p.type.upcase }.join("|").ljust(20)}"
         else
           output += "#{index}. #{game.name.ljust(60)}#{game.release_date.date.rjust(20)}"
         end
