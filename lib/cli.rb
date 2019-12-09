@@ -32,10 +32,6 @@ class CLI
     end
   end
 
-  # def scrape_all_individual_game_info
-  #   Game.all.each { |game| Scraper.scrape_game_info_page(game) }
-  # end
-
   def find_menu(mode = self.mode)
     MenuOption.find_menu(mode)
   end
