@@ -2,11 +2,11 @@
 require_relative '../config/environment'
 
 platform_select_content = {
-  all:  "All",
   pc: "PC (Windows)",
   xb1: "Xbox One",
   ps4: "PlayStation 4",
-  switch: "Nintendo Switch"
+  switch: "Nintendo Switch",
+  all:  "All"
 }
 
 individual_game_menu_content = {

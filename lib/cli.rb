@@ -89,7 +89,7 @@ class CLI
         self.update_mode(:month_select)
 
       when :month_select
-        selection = self.find_menu_content[index]
+        selection = self.user_choices[:month_select]
         next_mode = selection == "Back to Platform Selection" ? :platform_select : :game_list
 
         self.update_game_list_content
@@ -174,10 +174,19 @@ class CLI
     games = nil
 
     if platform_sym == :all
-      games = ReleaseDate.find_games_by_month(month)
+      if month == "All Months"
+        games = Game.all
+      else
+        games = ReleaseDate.find_games_by_month(month)
+      end
+
       ReleaseDate.sort_by_datetime(games)
     else
-      games = Game.find_games_by_platform_within_month(platform_sym, month)
+      if month == "All Months"
+        games = Game.all_of_platform_type(platform_sym)
+      else
+        games = Game.find_games_by_platform_within_month(platform_sym, month)
+      end
     end
 
     self.create_game_list_menu(games)
@@ -200,6 +209,7 @@ class CLI
 
     menu = self.find_menu(:month_select)
     menu.menu = dates.collect { |month| ReleaseDate.month_words[month] }
+    menu.menu << "All Months"
     menu.menu << "Back to Platform Selection"
   end
 
