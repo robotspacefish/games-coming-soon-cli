@@ -20,7 +20,7 @@ class MenuOption
     if self.mode == :game_list
       platform == :all ? self.print_game_list_menu(:all) : self.print_game_list_menu
     elsif self.mode == :month_select
-      self.print_from_array(self.menu)
+      self.print_month_select(self.menu)
       self.print_instructions
     else
       self.print_from_hash(self.menu)
@@ -56,7 +56,7 @@ class MenuOption
     puts "#{count}. Quit".red.bold
   end
 
-  def print_from_array(content)
+  def print_month_select(content)
     puts "\n"
     content.each.with_index(1) do |item, index|
       puts "#{index}. #{item}"
