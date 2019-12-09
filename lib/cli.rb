@@ -1,6 +1,6 @@
 class CLI
   attr_accessor :mode, :user_choices
-
+  LINE_WIDTH = 80
   def initialize(menus_hash)
     @mode = :platform_select
     menus_hash.each do |menu_key, menu_value|
@@ -118,29 +118,29 @@ class CLI
 
   def print_title
     puts "\n"
-    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(80)
-    puts "|G|a|m|e|s| |C|o|m|i|n|g| |S|o|o|n|".center(80).red
-    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(80)
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(LINE_WIDTH)
+    puts "|G|a|m|e|s| |C|o|m|i|n|g| |S|o|o|n|".center(LINE_WIDTH).red
+    puts "+-+-+-+-+-+ +-+-+-+-+-+-+ +-+-+-+-+".center(LINE_WIDTH)
     puts "\n"
   end
 
   def print_platform_select
     puts "\n"
-    puts " Platform Selection Menu ".center(80, padstr="=").black.bold.on_white
+    puts " Platform Selection Menu ".center(LINE_WIDTH, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:platform_select).print_menu
   end
 
   def print_month_select
     puts "\n"
-    puts " Upcoming Month Selection Menu ".center(80, padstr="=").black.bold.on_white
+    puts " Upcoming Month Selection Menu ".center(LINE_WIDTH, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:month_select).print_menu
   end
 
   def print_individual_game_select
     puts "\n"
-    puts " Menu ".center(80, padstr="=").black.bold.on_white
+    puts " Menu ".center(LINE_WIDTH, padstr="=").black.bold.on_white
     puts "\n"
     self.find_menu(:individual_game).print_menu
   end
@@ -149,7 +149,7 @@ class CLI
     platform = self.user_choices[:platform_select]
     month = self.user_choices[:month_select]
 
-    puts " #{platform.to_s.upcase} Games Coming Out in #{month.capitalize} ".center(80, padstr="=").black.bold.on_white
+    puts " #{platform.to_s.upcase} Games Coming Out in #{month.capitalize} ".center(LINE_WIDTH, padstr="=").black.bold.on_white
     puts "\n"
 
     game_list = self.find_menu(:game_list)
