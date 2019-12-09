@@ -34,7 +34,7 @@ class MenuOption
         if platform == :all
           output += "#{index}. #{game.name.ljust(60)}#{game.release_date.format_date.rjust(20)}   #{game.platforms.collect{ |p| p.type.upcase }.join("|").ljust(20)}"
         else
-          output += "#{index}. #{game.name.ljust(60)}#{game.release_date.date.rjust(20)}"
+          output += "#{index}. #{game.name.ljust(60)}#{game.release_date.format_date.rjust(20)}"
         end
           puts index.even? ? output.green.on_black : output.black.on_green
     end
