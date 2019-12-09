@@ -89,7 +89,7 @@ class CLI
         self.update_mode(:month_select)
 
       when :month_select
-        selection = self.find_menu_content[index]
+        selection = self.user_choices[:month_select]
         next_mode = selection == "Back to Platform Selection" ? :platform_select : :game_list
 
         self.update_game_list_content
