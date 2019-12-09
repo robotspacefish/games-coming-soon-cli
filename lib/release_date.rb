@@ -50,7 +50,8 @@ class ReleaseDate
   end
 
   def format_date
-    "#{self.month}/#{self.day}/#{self.year}"
+    day = self.day.to_i < 10 ? "0#{self.day}" : self.day
+    "#{self.month}/#{day}/#{self.year}"
   end
 
   def self.sort_by_datetime(games)
