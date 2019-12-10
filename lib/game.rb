@@ -1,4 +1,5 @@
 class Game
+  include Days360
   attr_accessor :name, :url, :release_date, :genres, :developers, :publishers, :about, :info_scraped, :platforms, :platform
   @@all = []
 
