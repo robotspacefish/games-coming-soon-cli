@@ -1,4 +1,5 @@
 class Game
+  include Days360
   attr_accessor :name, :url, :release_date, :genres, :developers, :publishers, :about, :info_scraped, :platforms, :platform
   @@all = []
 
@@ -103,8 +104,9 @@ class Game
 
   def self.should_skip_game?(release_date)
     # don't store games releasing over a year from now
-    r = DateTime.strptime(release_date, '%Y-%m-%d')
-    now = Time.now
-    r.month.to_i == now.month.to_i && r.year.to_i > now.year.to_i + 1
+    r = Date.parse(release_date)
+    now = Date.today
+
+    days360(now, r) > 360 || (r.month == now.month && r.year != now.year)
   end
 end
