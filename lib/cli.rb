@@ -1,6 +1,7 @@
 class CLI
   attr_accessor :mode, :user_choices
   LINE_WIDTH = 80
+
   def initialize(menus_hash)
     @mode = :platform_select
     menus_hash.each do |menu_key, menu_value|
@@ -17,8 +18,7 @@ class CLI
   def setup_user_choices
     @user_choices = {
       platform_select: nil,
-      month_select: nil,
-      start_over_select: nil
+      month_select: nil
     }
   end
 
