@@ -31,7 +31,7 @@ $ ./bin/games_coming_soon
 Option 2:
 
 ```
-$ ruby/bin/games_coming_soon
+$ ruby ./bin/games_coming_soon
 ```
 
 ## Built With
